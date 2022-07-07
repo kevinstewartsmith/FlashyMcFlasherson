@@ -1,0 +1,77 @@
+import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
+//Center the cards div - check
+//Add bread crumbs
+//add flashcard data
+function CreateCollection(props) {
+  const [expanded, setExpansion] = useState(false);
+  const [collectionInfo, setCollectionInfo] = useState({
+    name: "",
+    description: ""
+  });
+
+  function handleClick() {
+    setExpansion(!expanded);
+  }
+
+  function handleInputText(event) {
+    const { name, value } = event.target;
+
+    setCollectionInfo((prevValue) => {
+      if (name === "title") {
+        return {
+          name: value,
+          description: prevValue.content
+        };
+      } else if (name === "content") {
+        return {
+          name: prevValue.name,
+          description: value
+        };
+      }
+    });
+  }
+
+  function submitNote(event) {
+    props.onAdd(collectionInfo);
+    setCollectionInfo({
+      name: "",
+      description: ""
+    });
+    event.preventDefault();
+  }
+
+  return (
+    <div>
+      <form className="create-note">
+        <input
+          name={props.topName}
+          placeholder={props.topPlaceholder}
+          onClick={handleClick}
+          onChange={handleInputText}
+          type="text"
+          value={collectionInfo.name}
+        />
+        {expanded ? (
+          <textarea
+            name={props.bottomName}
+            onChange={handleInputText}
+            value={collectionInfo.description}
+            placeholder={props.bottomPlaceholder}
+            //rows={rows}
+            type="text"
+          />
+        ) : null}
+
+        <Zoom in={expanded}>
+          <Fab onClick={submitNote}>
+            <AddIcon />
+          </Fab>
+        </Zoom>
+      </form>
+    </div>
+  );
+}
+export default CreateCollection;
