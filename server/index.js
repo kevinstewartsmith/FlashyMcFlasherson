@@ -43,10 +43,10 @@ const flashCardSchema = mongoose.Schema({
 
 })
 const fcCollectionsSchema = mongoose.Schema({
-  _id: {
-    type: String,
-    required: true
-  },
+  // _id: {
+  //   type: String,
+  //   required: false
+  // },
   name: {
     type: String,
     required: true
@@ -57,12 +57,12 @@ const fcCollectionsSchema = mongoose.Schema({
   }
 })
 const FlashCard = mongoose.model("flashcard", flashCardSchema)
-const FCCOllections = mongoose.model("fc-collection", fcCollectionsSchema);
+const FCCollections = mongoose.model("fc-collection", fcCollectionsSchema);
 
 //End of Database
 
 
-FCCOllections.find({}, function(err, foundCollection) {
+FCCollections.find({}, function(err, foundCollection) {
   if (err) {console.log("SHIT!: " + err)
   } else { 
      //console.log(foundCollection)
@@ -98,6 +98,14 @@ app.use(bodyParser.urlencoded({
 //var jsonParser = bodyParser.json()
 app.post("/addCollection", (req, res) => {
   const data = req.body
+
+  const newCollection = new FCCollections({
+    name: data.name,
+    description: data.description
+  })
+
+  newCollection.save()
+
   res.json({
     status: "success",
     name: data.name,
