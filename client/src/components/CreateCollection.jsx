@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
@@ -7,10 +8,7 @@ import Zoom from "@mui/material/Zoom";
 //add flashcard data
 function CreateCollection(props) {
   const [expanded, setExpansion] = useState(false);
-  const [collectionInfo, setCollectionInfo] = useState({
-    name: "",
-    description: ""
-  });
+  const [collectionInfo, setCollectionInfo] = useState({ name: "", description: "" });
 
   function handleClick() {
     setExpansion(!expanded);
@@ -36,10 +34,20 @@ function CreateCollection(props) {
 
   function submitNote(event) {
     props.onAdd(collectionInfo);
-    setCollectionInfo({
-      name: "",
-      description: ""
+    const name = collectionInfo.name
+    const description = collectionInfo.description
+    fetch('/addCollection', {
+      method: 'POST',
+      // We convert the React state to JSON and send it as the POST body
+      body: JSON.stringify({"name": name, "description": description}),
+      headers: {"Content-Type": "application/json"}//{
+
+    }).then(function(response) {
+      console.log(response)
+      //return response.json();
     });
+
+    setCollectionInfo({ name: "",description: "" });
     event.preventDefault();
   }
 

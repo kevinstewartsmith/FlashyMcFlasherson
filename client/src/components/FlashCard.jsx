@@ -3,7 +3,7 @@ import { useSpring, a } from "@react-spring/web";
 import styles from "./styles.module.css";
 
 export default function App() {
-  const [flipped, set] = useState(false);
+  const [flipped, set] = useState(true);
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
