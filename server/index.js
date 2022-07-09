@@ -8,9 +8,12 @@ const mongoose = require("mongoose")
 const app = express();
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use(express.json())
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 mongoose.connect("mongodb+srv://Kevinstewartsmith:Flashy@cluster0.kvw7r.mongodb.net/FLASHY-DB")
 
-
+const boot = "booty"
 // mongoose.connection.on('open', function (ref) {
 //   console.log('Connected to mongo server.');
 //   //trying to get collection names
@@ -53,7 +56,7 @@ const fcCollectionsSchema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   }
 })
 const FlashCard = mongoose.model("flashcard", flashCardSchema)
@@ -84,18 +87,36 @@ console.log("Server terminal! ccc")
 
 
 app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
+  res.json({ message: "Hello from server!" });
   });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-    console.log("homepage!")
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  console.log("homepage!")
 });
-//app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-//var jsonParser = bodyParser.json()
+app.get("/getCollections", (req, res) => {
+  let data = []
+  FCCollections.find({},function(err,foundCollections) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(foundCollections[0])
+      //data = foundCollections
+      // foundCollections.forEach(function(collection){
+      //   data.push(collection)
+      // })
+      data = foundCollections
+      res.send(data)
+    }
+  }) 
+
+  //console.log(req);
+  //res.send(data.length)
+  //res.send({"message": data})
+  
+  //res.json({"message": "Getttttt"})
+})
+
 app.post("/addCollection", (req, res) => {
   const data = req.body
 
@@ -111,12 +132,17 @@ app.post("/addCollection", (req, res) => {
     name: data.name,
     description: data.description
   })
-  console.log(req.body)
 
-
-  //res.send("great!")
 })
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+  // FCCollections.find({},function(err,foundCollections) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log(foundCollections)
+  //   }
+  // }) 

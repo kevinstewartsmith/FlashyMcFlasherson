@@ -11,10 +11,20 @@ function App() {
   const [collectionArray, setCollectionItems] = useState(collections);
   const [collectionClicked, setCollectionClicked] = useState(false);
 
+  // function getCollectionData() {
+  //   fetch("/getCollections").then(function(response) {
+  //     console.log("da json")
+  //     console.log(response.json())
+  //     console.log("da json")
+  //     return response;
+  //   });
+  // }
+
   function addItem(collection) {
     setCollectionItems((prevValue) => {
       return [collection, ...prevValue];
     });
+    //getCollectionData()
   }
 
   function handleCollectionClick() {

@@ -3,12 +3,14 @@ import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
+
 //Center the cards div - check
 //Add bread crumbs
 //add flashcard data
 function CreateCollection(props) {
   const [expanded, setExpansion] = useState(false);
   const [collectionInfo, setCollectionInfo] = useState({ name: "", description: "" });
+
 
   function handleClick() {
     setExpansion(!expanded);
@@ -31,21 +33,40 @@ function CreateCollection(props) {
       }
     });
   }
+  function getCollectionData() {
+
+    fetch("/getCollections",  {
+      headers: {
+      //"Content-Type": "application/json"
+      }
+    }).then(function(response){
+      console.log(response)
+      return response.json();
+    }).then(function(response){ console.log(response) }).catch(err => {
+      // Do something for an error here
+      console.log("Error Reading data " + err);
+    });;
+    //console.log(fetch("/getCollections").json());
+    //fetch("/getCollections").then(response => response).then(data => console.log(data))
+    //.then(data => console.log(data));
+    
+  }
 
   function submitNote(event) {
     props.onAdd(collectionInfo);
     const name = collectionInfo.name
     const description = collectionInfo.description
-    fetch('/addCollection', {
+     fetch('/addCollection', {
       method: 'POST',
       // We convert the React state to JSON and send it as the POST body
       body: JSON.stringify({"name": name, "description": description}),
-      headers: {"Content-Type": "application/json"}//{
+      headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
 
     }).then(function(response) {
       console.log(response)
-      //return response.json();
-    });
+      return response.json();
+    }).then(function(response){ console.log(response) });
+    getCollectionData()
 
     setCollectionInfo({ name: "",description: "" });
     event.preventDefault();
