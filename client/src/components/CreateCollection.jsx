@@ -33,27 +33,31 @@ function CreateCollection(props) {
       }
     });
   }
-  function getCollectionData() {
+  // function getCollectionData() {
+  //   const dataArray = []
+  //   fetch("/getCollections",  {
+  //     headers: {
+  //     //"Content-Type": "application/json"
+  //     }
+  //   }).then(function(response){
+  //     console.log(response[0])
+  //     //setCollectionInfo(response)
+  //     return response.json();
+  //   }).then(function(response){
+  //      //console.log(response) 
+  //      response.forEach(function(collection){ dataArray.push(collection)})
+  //      console.log(dataArray) 
+  //      //setCollectionInfo(dataArray)
+  //   }).catch(err => {
+  //     // Do something for an error here
+  //     console.log("Error Reading data " + err);
+  //   });;
 
-    fetch("/getCollections",  {
-      headers: {
-      //"Content-Type": "application/json"
-      }
-    }).then(function(response){
-      console.log(response)
-      return response.json();
-    }).then(function(response){ console.log(response) }).catch(err => {
-      // Do something for an error here
-      console.log("Error Reading data " + err);
-    });;
-    //console.log(fetch("/getCollections").json());
-    //fetch("/getCollections").then(response => response).then(data => console.log(data))
-    //.then(data => console.log(data));
-    
-  }
+  //   return dataArray
+  // }
 
   function submitNote(event) {
-    props.onAdd(collectionInfo);
+    
     const name = collectionInfo.name
     const description = collectionInfo.description
      fetch('/addCollection', {
@@ -66,8 +70,8 @@ function CreateCollection(props) {
       console.log(response)
       return response.json();
     }).then(function(response){ console.log(response) });
-    getCollectionData()
-
+    
+    props.onAdd(collectionInfo);
     setCollectionInfo({ name: "",description: "" });
     event.preventDefault();
   }

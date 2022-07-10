@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
@@ -8,25 +8,41 @@ import FlashCard from "./FlashCard";
 import Grid from "@mui/material/Grid";
 
 function App() {
-  const [collectionArray, setCollectionItems] = useState(collections);
+  const [collectionArray, setCollectionItems] = useState([]);
   const [collectionClicked, setCollectionClicked] = useState(false);
-
-  // function getCollectionData() {
-  //   fetch("/getCollections").then(function(response) {
-  //     console.log("da json")
-  //     console.log(response.json())
-  //     console.log("da json")
-  //     return response;
-  //   });
-  // }
-
+  useEffect(() => {
+    //const dataArray = []
+    fetch("/getCollections",  {
+      headers: {
+      //"Content-Type": "application/json"
+      }
+    }).then(function(response){
+      
+      return response.json();
+    }).then(function(response){
+       //console.log(typeof response[0]._id) 
+       setCollectionItems(response)
+       console.log(collectionArray.length);
+    }).catch(err => {
+      // Do something for an error here
+      console.log("Error Reading data " + err);
+    });;
+    //setCollectionItems(dataArray)
+    //return dataArray
+    //console.log(dataArray);
+  },[addItem, deleteCollection])
+  
   function addItem(collection) {
-    setCollectionItems((prevValue) => {
-      return [collection, ...prevValue];
-    });
+    console.log(collectionArray[0]._id)
+    // setCollectionItems((prevValue) => {
+    //   return [collection, ...prevValue];
+    // });
+    //setCollectionItems(collectionArray)
     //getCollectionData()
   }
-
+  function deleteCollection(collection) {
+    console.log(collection + " clicked App");
+  }
   function handleCollectionClick() {
     setCollectionClicked(!collectionClicked);
   }
@@ -68,9 +84,12 @@ function App() {
                 {collectionArray.map((collection) => (
                   <Grid item padding={1} xs={4} spacing={3}>
                     <Note
+                      key={collection._id}
+                      id={collection._id}
                       collectionName={collection.name}
                       description={collection.description}
                       onClick={handleCollectionClick}
+                      onDelete={deleteCollection}
                     />
                   </Grid>
                 ))}
@@ -91,6 +110,7 @@ function App() {
               frontRows={3}
               backRows={3}
             />
+            {/*<FlashCard />
             <FlashCard />
             <FlashCard />
             <FlashCard />
@@ -101,8 +121,7 @@ function App() {
             <FlashCard />
             <FlashCard />
             <FlashCard />
-            <FlashCard />
-            <FlashCard />
+            <FlashCard />*/}
           </div>
         )}
       </div>

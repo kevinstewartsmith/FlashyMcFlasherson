@@ -100,7 +100,7 @@ app.get("/getCollections", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(foundCollections[0])
+      //console.log(foundCollections[0])
       //data = foundCollections
       // foundCollections.forEach(function(collection){
       //   data.push(collection)
@@ -131,6 +131,24 @@ app.post("/addCollection", (req, res) => {
     status: "success",
     name: data.name,
     description: data.description
+  })
+
+})
+
+app.post("/deleteCollection", (req, res) => {
+  const collectionId = req.body.id
+  FCCollections.deleteOne({_id: collectionId}, function(err, foundCollection) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(collectionId);
+      
+      res.json({
+        status: "Successful delete",
+        id: collectionId
+      
+       })
+    }
   })
 
 })

@@ -6,6 +6,24 @@ function Note(props) {
     setMouseEntered(!mouseEntered);
   }
 
+  function clickDelete(event){
+    const id = props.id
+    fetch('/deleteCollection', {
+      method: 'POST',
+      // We convert the React state to JSON and send it as the POST body
+      body: JSON.stringify({"id": id}),
+      headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+
+    }).then(function(response) {
+      //console.log(response)
+      return response.json();
+    }).then(function(response){ console.log(response) });
+    //const array = getCollectionData()
+    
+    props.onDelete(props.id)
+    event.preventDefault();
+  }
+
   return (
     <div
       className="note"
@@ -16,9 +34,12 @@ function Note(props) {
       <div className="note-div">
         <div className="center">
           <h1>{props.collectionName}</h1>
-          <p>{mouseEntered ? props.description : null}</p>
+          <p>{mouseEntered ? props.description +": " + props.id : null}</p>
+          <button onClick={clickDelete}> Delete</button>
         </div>
+        
       </div>
+      
     </div>
   );
 }
