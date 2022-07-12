@@ -25,6 +25,7 @@ function Note(props) {
   }
 
   return (
+    <div>
     <div
       className="note"
       onClick={props.onClick}
@@ -35,11 +36,15 @@ function Note(props) {
         <div className="center">
           <h1>{props.collectionName}</h1>
           <p>{mouseEntered ? props.description +": " + props.id : null}</p>
-          <button onClick={clickDelete}> Delete</button>
+          
         </div>
         
       </div>
       
+    </div>
+    <div className="delete-button-container">
+    <button className="delete-button" onClick={clickDelete}> Delete</button>
+    </div>
     </div>
   );
 }

@@ -242,3 +242,13 @@ form.create-note button {
   background-color: orange;
   border-radius: 7px;
 }
+
+.delete-button {
+  position: absolute;
+}
+.delete-button-container {
+  position: relative;
+  display: inline-block;
+  top: 130px;
+  left: -50px;
+}
