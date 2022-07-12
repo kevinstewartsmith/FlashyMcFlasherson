@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 function Note(props) {
   const [mouseEntered, setMouseEntered] = useState(false);
@@ -43,7 +44,8 @@ function Note(props) {
       
     </div>
     <div className="delete-button-container">
-    <button className="delete-button" onClick={clickDelete}> Delete</button>
+    {/* <button className="delete-button" onClick={clickDelete}> <DeleteOutlinedIcon /></button> */}
+    <DeleteOutlinedIcon className="delete-button" onClick={clickDelete}/>
     </div>
     </div>
   );
