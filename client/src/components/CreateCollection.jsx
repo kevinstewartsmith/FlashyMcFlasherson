@@ -10,9 +10,8 @@ import Zoom from "@mui/material/Zoom";
 function CreateCollection(props) {
   const [expanded, setExpansion] = useState(false);
   const [collectionInfo, setCollectionInfo] = useState({ name: "", description: "" });
-
-
-  function handleClick() {
+  
+  function handleClick() {  
     setExpansion(!expanded);
   }
 
@@ -20,12 +19,12 @@ function CreateCollection(props) {
     const { name, value } = event.target;
 
     setCollectionInfo((prevValue) => {
-      if (name === "title") {
+      if (name === "title" || name ==="cardFront") {
         return {
           name: value,
           description: prevValue.content
         };
-      } else if (name === "content") {
+      } else if (name === "content" || name == "cardBack") {
         return {
           name: prevValue.name,
           description: value
@@ -33,47 +32,44 @@ function CreateCollection(props) {
       }
     });
   }
-  // function getCollectionData() {
-  //   const dataArray = []
-  //   fetch("/getCollections",  {
-  //     headers: {
-  //     //"Content-Type": "application/json"
-  //     }
-  //   }).then(function(response){
-  //     console.log(response[0])
-  //     //setCollectionInfo(response)
-  //     return response.json();
-  //   }).then(function(response){
-  //      //console.log(response) 
-  //      response.forEach(function(collection){ dataArray.push(collection)})
-  //      console.log(dataArray) 
-  //      //setCollectionInfo(dataArray)
-  //   }).catch(err => {
-  //     // Do something for an error here
-  //     console.log("Error Reading data " + err);
-  //   });;
 
-  //   return dataArray
-  // }
 
   function submitNote(event) {
     
     const name = collectionInfo.name
     const description = collectionInfo.description
-     fetch('/addCollection', {
-      method: 'POST',
-      // We convert the React state to JSON and send it as the POST body
-      body: JSON.stringify({"name": name, "description": description}),
-      headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-
-    }).then(function(response) {
-      console.log(response)
-      return response.json();
-    }).then(function(response){ console.log(response) });
     
-    props.onAdd(collectionInfo);
-    setCollectionInfo({ name: "",description: "" });
-    event.preventDefault();
+    if (props.collectionClicked === false) {
+      fetch('/addCollection', {
+          method: 'POST',
+          // We convert the React state to JSON and send it as the POST body
+          body: JSON.stringify({"name": name, "description": description}),
+          headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+
+        }).then(function(response) {
+          console.log(response)
+          return response.json();
+        }).then(function(response){ console.log(response) });
+    } else {
+      console.log("Add Flash Card");  
+      fetch('/addFlashCard', {
+        method: 'POST',
+        // We convert the React state to JSON and send it as the POST body
+        body: JSON.stringify({"name": name, "description": description}),
+        headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
+      }).then(function(response){ console.log(response) });
+      
+      
+    }
+      
+      props.onAdd(collectionInfo);
+      setCollectionInfo({ name: "",description: "" });
+      event.preventDefault();
+    
   }
 
   return (

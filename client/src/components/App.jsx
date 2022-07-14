@@ -10,8 +10,10 @@ import Grid from "@mui/material/Grid";
 function App() {
   const [collectionArray, setCollectionItems] = useState([]);
   const [collectionClicked, setCollectionClicked] = useState(false);
+  const [selectedCollection, setSelectedCollection] = useState("");
+  const [flashCards, setFlashCards] = useState([])
   useEffect(() => {
-    //const dataArray = []
+    
     fetch("/getCollections",  {
       headers: {
       //"Content-Type": "application/json"
@@ -20,39 +22,43 @@ function App() {
       
       return response.json();
     }).then(function(response){
-       //console.log(typeof response[0]._id) 
+       
        setCollectionItems(response)
        console.log(collectionArray.length);
     }).catch(err => {
-      // Do something for an error here
+      
       console.log("Error Reading data " + err);
     });;
-    //setCollectionItems(dataArray)
-    //return dataArray
-    //console.log(dataArray);
-  },[addItem, deleteCollection])
+    
+  },[addItem, deleteCollection]);
+
+  
   
   function addItem(collection) {
-    console.log(collectionArray[0]._id)
-    // setCollectionItems((prevValue) => {
-    //   return [collection, ...prevValue];
-    // });
-    //setCollectionItems(collectionArray)
-    //getCollectionData()
+    console.log(collectionArray[0]._id)  
   }
   function deleteCollection(collection) {
     console.log(collection + " clicked App");
   }
-  function handleCollectionClick() {
+  function handleCollectionClick(id) {
     setCollectionClicked(!collectionClicked);
+    console.log("Collection clicked");
+    console.log("App: " + id);
+    setSelectedCollection(id);
+    const flashCards = collectionArray.filter((collectionItem) => collectionItem._id === selectedCollection)
+    console.log(flashCards);
+
   }
 
-  function addFlashCard() {}
+  function addFlashCard(flashCard) {
+
+  }
 
   return (
     <div>
       <Header />
       <div className="center-div">
+
         {!collectionClicked && (
           <div>
             <CreateCollection
@@ -62,16 +68,10 @@ function App() {
               bottomPlaceholder={"Description (optional)"}
               topName={"title"}
               bottomName={"content"}
+              collectionClicked={collectionClicked}
+              
             />
-            {/*<div className="body-div">
-              {collectionArray.map((collection) => (
-                <Note
-                  collectionName={collection.name}
-                  description={collection.description}
-                  onClick={handleCollectionClick}
-                />
-              ))}
-              </div>*/}
+
             <div>
               <Grid
                 container
@@ -109,8 +109,10 @@ function App() {
               bottomName={"cardBack"}
               frontRows={3}
               backRows={3}
+              collectionClicked={collectionClicked}
+              //selectedCollection={selectedCollection}
+              
             />
-            {/*<FlashCard />
             <FlashCard />
             <FlashCard />
             <FlashCard />
@@ -121,7 +123,8 @@ function App() {
             <FlashCard />
             <FlashCard />
             <FlashCard />
-            <FlashCard />*/}
+            <FlashCard />
+            <FlashCard />
           </div>
         )}
       </div>

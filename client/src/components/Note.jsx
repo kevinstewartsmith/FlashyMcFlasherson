@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import Zoom from "@mui/material/Zoom";
 
 function Note(props) {
   const [mouseEntered, setMouseEntered] = useState(false);
@@ -24,12 +25,16 @@ function Note(props) {
     props.onDelete(props.id)
     event.preventDefault();
   }
+  function handleClick() {
+    const id = props.id
+    props.onClick(id)
+  }
 
   return (
     <div>
     <div
       className="note"
-      onClick={props.onClick}
+      onClick={handleClick}
       onMouseEnter={handleMouse}
       onMouseLeave={handleMouse}
     >
@@ -43,10 +48,14 @@ function Note(props) {
       </div>
       
     </div>
+    
     <div className="delete-button-container">
     {/* <button className="delete-button" onClick={clickDelete}> <DeleteOutlinedIcon /></button> */}
+    
     <DeleteOutlinedIcon className="delete-button" onClick={clickDelete}/>
+    
     </div>
+    
     </div>
   );
 }

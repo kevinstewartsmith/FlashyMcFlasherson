@@ -31,10 +31,7 @@ const PORT = process.env.PORT || 8080;
 
 //Database Schemas and Models
 const flashCardSchema = mongoose.Schema({
-  _id: {
-    type: String,
-    required: true
-  },
+  
   front: {
     type: String,
     required: true
@@ -57,6 +54,10 @@ const fcCollectionsSchema = mongoose.Schema({
   description: {
     type: String,
     required: false
+  },
+  flashCards: {
+    type: [flashCardSchema],
+    required: true
   }
 })
 const FlashCard = mongoose.model("flashcard", flashCardSchema)
@@ -119,10 +120,11 @@ app.get("/getCollections", (req, res) => {
 
 app.post("/addCollection", (req, res) => {
   const data = req.body
-
+  
   const newCollection = new FCCollections({
     name: data.name,
-    description: data.description
+    description: data.description,
+    flashCards: []
   })
 
   newCollection.save()
@@ -152,15 +154,35 @@ app.post("/deleteCollection", (req, res) => {
   })
 
 })
+app.post("/addFlashCard", (req, res) => {
+  console.log(req.body)
+})
+app.post("/deleteFlashCard", (req, res) => {
+  
+})
+app.get("/collections/:collectionName", function(req, res) {
+
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-  // FCCollections.find({},function(err,foundCollections) {
+  // FCCollections.findOne({_id: "62cfa26eebbf22bab9ff60c1"},function(err,foundCollection) {
   //   if (err) {
   //     console.log(err);
   //   } else {
-  //     console.log(foundCollections)
+  //     console.log(foundCollection)
+  //     const flashCard =  new FlashCard({
+  //         front: "Faart Fart Fart",
+  //         back: "Yoo444"
+  //     })
+  //     flashCard.save()
+      
+  //     foundCollection.flashCards.push(flashCard);
+  //     foundCollection.save()
+  //     console.log(foundCollection)
+      
+
   //   }
   // }) 
