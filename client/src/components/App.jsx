@@ -41,14 +41,15 @@ function App() {
     console.log(collection + " clicked App");
   }
   function handleCollectionClick(id) {
+    console.log("Handle collection clicked");
     setCollectionClicked(!collectionClicked);
-    console.log("Collection clicked");
-    console.log("App: " + id);
-    setSelectedCollection(id);
-    const flashCards = collectionArray.filter((collectionItem) => collectionItem._id === selectedCollection)
-    console.log(flashCards);
-
+    let flashCardFiltered = collectionArray.find(function(collection){
+      return collection._id === id
+    })
+    console.log(flashCardFiltered.flashCards);
+    setFlashCards(flashCardFiltered.flashCards)
   }
+  
 
   function addFlashCard(flashCard) {
 
@@ -125,6 +126,17 @@ function App() {
             <FlashCard />
             <FlashCard />
             <FlashCard />
+            {flashCards.map((flashCard) => (
+                  <Grid item padding={1} xs={4} spacing={3}>
+                    <FlashCard
+                      key={flashCard._id}
+                      id={flashCard._id}
+                      front={flashCard.front}
+                      back={flashCard.back}
+                      
+                    />
+                  </Grid>
+                ))}
           </div>
         )}
       </div>

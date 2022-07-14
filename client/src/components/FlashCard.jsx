@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
 import styles from "./styles.module.css";
+import { PropaneSharp } from "@mui/icons-material";
 
-export default function App() {
+export default function FlashCard(props) {
   const [flipped, set] = useState(true);
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
@@ -24,7 +25,7 @@ export default function App() {
             }}
           >
             <div className="center">
-              <h1>Front</h1>
+              <h1>{props.front}</h1>
             </div>
           </a.div>
           <a.div
@@ -36,7 +37,7 @@ export default function App() {
             }}
           >
             <div className="center">
-              <h1>Back</h1>
+              <h1>{props.back}</h1>
             </div>
           </a.div>
         </div>
