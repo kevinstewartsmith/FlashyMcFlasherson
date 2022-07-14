@@ -41,21 +41,22 @@ function CreateCollection(props) {
     
     if (props.collectionClicked === false) {
       fetch('/addCollection', {
-          method: 'POST',
-          // We convert the React state to JSON and send it as the POST body
-          body: JSON.stringify({"name": name, "description": description}),
-          headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+         method: 'POST',
+        // We convert the React state to JSON and send it as the POST body
+        body: JSON.stringify({"name": name, "description": description}),
+        headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
 
-        }).then(function(response) {
-          console.log(response)
-          return response.json();
-        }).then(function(response){ console.log(response) });
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
+      }).then(function(response){ console.log(response) });
     } else {
-      console.log("Add Flash Card");  
+      console.log("Add Flash Card: " + props.selectedCollection); 
+      const collection =  props.selectedCollection
       fetch('/addFlashCard', {
         method: 'POST',
         // We convert the React state to JSON and send it as the POST body
-        body: JSON.stringify({"name": name, "description": description}),
+        body: JSON.stringify({"collection": collection, "front": name, "back": description}),
         headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
 
       }).then(function(response) {

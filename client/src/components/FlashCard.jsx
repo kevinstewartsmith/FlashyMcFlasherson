@@ -38,6 +38,7 @@ export default function FlashCard(props) {
           >
             <div className="center">
               <h1>{props.back}</h1>
+              <h1>{props.collectionID}</h1>
             </div>
           </a.div>
         </div>

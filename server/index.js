@@ -156,7 +156,24 @@ app.post("/deleteCollection", (req, res) => {
 })
 app.post("/addFlashCard", (req, res) => {
   console.log(req.body)
+  const data = req.body
+  FCCollections.findOne({_id: data.collection}, function(err, foundCollection) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(foundCollection);
+      const flashCard =  new FlashCard({
+          front: data.front,
+          back: data.back
+      })
+      flashCard.save()
+      foundCollection.flashCards.push(flashCard);
+      foundCollection.save()
+      
+    }
+  })
 })
+
 app.post("/deleteFlashCard", (req, res) => {
   
 })

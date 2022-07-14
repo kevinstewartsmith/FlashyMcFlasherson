@@ -3,7 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateCollection from "./CreateCollection";
-import collections from "./collections";
 import FlashCard from "./FlashCard";
 import Grid from "@mui/material/Grid";
 
@@ -12,27 +11,19 @@ function App() {
   const [collectionClicked, setCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState("");
   const [flashCards, setFlashCards] = useState([])
+  
   useEffect(() => {
     
-    fetch("/getCollections",  {
-      headers: {
-      //"Content-Type": "application/json"
-      }
-    }).then(function(response){
-      
+    fetch("/getCollections").then(function(response){
       return response.json();
     }).then(function(response){
-       
        setCollectionItems(response)
        console.log(collectionArray.length);
     }).catch(err => {
-      
       console.log("Error Reading data " + err);
-    });;
-    
-  },[addItem, deleteCollection]);
+    });  
+  },[addItem, deleteCollection]); 
 
-  
   
   function addItem(collection) {
     console.log(collectionArray[0]._id)  
@@ -41,8 +32,9 @@ function App() {
     console.log(collection + " clicked App");
   }
   function handleCollectionClick(id) {
-    console.log("Handle collection clicked");
-    setCollectionClicked(!collectionClicked);
+    setSelectedCollection(id)
+    console.log("Handle collection clicked: " + selectedCollection._id);
+    changeView()
     let flashCardFiltered = collectionArray.find(function(collection){
       return collection._id === id
     })
@@ -50,7 +42,7 @@ function App() {
     setFlashCards(flashCardFiltered.flashCards)
   }
   
-
+  function changeView(){  setCollectionClicked(!collectionClicked) }
   function addFlashCard(flashCard) {
 
   }
@@ -70,7 +62,7 @@ function App() {
               topName={"title"}
               bottomName={"content"}
               collectionClicked={collectionClicked}
-              
+              selectedCollection={selectedCollection} 
             />
 
             <div>
@@ -100,7 +92,7 @@ function App() {
         )}
         {collectionClicked && (
           <div className="body-div">
-            <button onClick={handleCollectionClick}>click</button>
+            <button onClick={changeView}>click</button>
             <CreateCollection
               onAdd={addFlashCard}
               inputType={"collection"}
@@ -111,32 +103,20 @@ function App() {
               frontRows={3}
               backRows={3}
               collectionClicked={collectionClicked}
-              //selectedCollection={selectedCollection}
-              
+              selectedCollection={selectedCollection} 
             />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
-            <FlashCard />
+            
             {flashCards.map((flashCard) => (
-                  <Grid item padding={1} xs={4} spacing={3}>
-                    <FlashCard
-                      key={flashCard._id}
-                      id={flashCard._id}
-                      front={flashCard.front}
-                      back={flashCard.back}
-                      
-                    />
-                  </Grid>
-                ))}
+              <Grid item padding={1} xs={4} spacing={3}>
+                <FlashCard
+                  key={flashCard._id}
+                  id={flashCard._id}
+                  front={flashCard.front}
+                  back={flashCard.back}
+                  collectionID={selectedCollection}
+                />
+              </Grid>
+            ))}
           </div>
         )}
       </div>
