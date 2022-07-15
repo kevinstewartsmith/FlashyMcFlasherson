@@ -22,10 +22,14 @@ function App() {
     }).catch(err => {
       console.log("Error Reading data " + err);
     });  
+    if (collectionClicked) {
+      filterFlashCards(selectedCollection)
+    }
+
   },[addItem, deleteCollection]); 
 
-  
-  function addItem(collection) {
+   
+  function addItem() {
     console.log(collectionArray[0]._id)  
   }
   function deleteCollection(collection) {
@@ -43,9 +47,14 @@ function App() {
   }
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
-  function addFlashCard(flashCard) {
-
+  function addFlashCard(flashCard) {}
+  function filterFlashCards(id) {
+    let flashCardsColl = collectionArray.find(function(collection){
+      return collection._id === id
+    })
+    setFlashCards(flashCardsColl.flashCards)
   }
+  
 
   return (
     <div>
@@ -94,7 +103,7 @@ function App() {
           <div className="body-div">
             <button onClick={changeView}>click</button>
             <CreateCollection
-              onAdd={addFlashCard}
+              onAdd={addItem}
               inputType={"collection"}
               topPlaceholder={"Card Front Text..."}
               bottomPlaceholder={"Card Back Text..."}

@@ -67,7 +67,7 @@ function CreateCollection(props) {
       
     }
       
-      props.onAdd(collectionInfo);
+      props.onAdd();
       setCollectionInfo({ name: "",description: "" });
       event.preventDefault();
     

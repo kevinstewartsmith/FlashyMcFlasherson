@@ -169,6 +169,11 @@ app.post("/addFlashCard", (req, res) => {
       flashCard.save()
       foundCollection.flashCards.push(flashCard);
       foundCollection.save()
+      res.json({
+        status: "Successfull Added Flash card",
+        front: data.front,
+        back: data.back
+       })
       
     }
   })
