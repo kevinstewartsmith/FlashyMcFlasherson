@@ -41,7 +41,7 @@ function CreateCollection(props) {
     
     if (props.collectionClicked === false) {
       fetch('/addCollection', {
-         method: 'POST',
+        method: 'POST',
         // We convert the React state to JSON and send it as the POST body
         body: JSON.stringify({"name": name, "description": description}),
         headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{

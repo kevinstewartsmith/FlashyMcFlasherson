@@ -89,12 +89,13 @@ console.log("Server terminal! ccc")
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
-  });
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   console.log("homepage!")
 });
+
 app.get("/getCollections", (req, res) => {
   let data = []
   FCCollections.find({},function(err,foundCollections) {
@@ -110,13 +111,34 @@ app.get("/getCollections", (req, res) => {
       res.send(data)
     }
   }) 
+});
+
+  app.post("/filterFlashCards", (req,res) => {
+    let collectionID = req.body.collectionID
+    let data = []
+    let flashCards = []
+    FCCollections.findOne({_id: collectionID}, function(err, foundFCs){
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(foundFCs);
+        res.json({
+          status: "success",
+          collectionId: collectionID,
+          foundFCs: foundFCs.flashCards 
+        })
+      }
+    })
+    //console.log(req.body);
+
+  });
 
   //console.log(req);
   //res.send(data.length)
   //res.send({"message": data})
   
   //res.json({"message": "Getttttt"})
-})
+
 
 app.post("/addCollection", (req, res) => {
   const data = req.body

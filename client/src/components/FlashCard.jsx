@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
 import styles from "./styles.module.css";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { PropaneSharp } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 export default function FlashCard(props) {
   const [flipped, set] = useState(true);
@@ -10,7 +12,12 @@ export default function FlashCard(props) {
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 }
   });
+
+  function deleteFlashCard() {
+    console.log("Flashcard deleted.")
+  }
   return (
+    <div>
     <div>
       <div className="flash-card note-div">
         <div className="flash" onClick={() => set((state) => !state)}>
@@ -42,7 +49,11 @@ export default function FlashCard(props) {
             </div>
           </a.div>
         </div>
+        <DeleteOutlinedIcon className="delete-button" onClick={deleteFlashCard }/>  
       </div>
+      
+    </div>
+   
     </div>
   );
 }

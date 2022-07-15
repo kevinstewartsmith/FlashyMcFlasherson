@@ -13,7 +13,7 @@ function App() {
   const [flashCards, setFlashCards] = useState([])
   
   useEffect(() => {
-    
+    //For loading collections
     fetch("/getCollections").then(function(response){
       return response.json();
     }).then(function(response){
@@ -22,13 +22,32 @@ function App() {
     }).catch(err => {
       console.log("Error Reading data " + err);
     });  
-    if (collectionClicked) {
-      filterFlashCards(selectedCollection)
-    }
+    // if (collectionClicked) {
+    //   filterFlashCards(selectedCollection)
+    // }
 
   },[addItem, deleteCollection]); 
+  //For loading flashcards
 
-   
+  useEffect(() => {
+    if (selectedCollection !== "") {
+      fetch("/filterFlashCards", {
+        method: 'POST',
+        // We convert the React state to JSON and send it as the POST body
+        body: JSON.stringify({"collectionID": selectedCollection}),
+        headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+      }).then(function(response){
+        return response.json();
+      }).then(function(response){
+        setFlashCards(response.foundFCs)
+        console.log(response.foundFCs);
+      }).catch(err => {
+        console.log("Error Reading data " + err);
+      });
+   } 
+  },[handleCollectionClick]); 
+
+
   function addItem() {
     console.log(collectionArray[0]._id)  
   }
@@ -39,15 +58,15 @@ function App() {
     setSelectedCollection(id)
     console.log("Handle collection clicked: " + selectedCollection._id);
     changeView()
-    let flashCardFiltered = collectionArray.find(function(collection){
-      return collection._id === id
-    })
-    console.log(flashCardFiltered.flashCards);
-    setFlashCards(flashCardFiltered.flashCards)
+    // let flashCardFiltered = collectionArray.find(function(collection){
+    //   return collection._id === id
+    // })
+    // console.log(flashCardFiltered.flashCards);
+    // setFlashCards(flashCardFiltered.flashCards)
   }
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
-  function addFlashCard(flashCard) {}
+  function addFlashCard() {}
   function filterFlashCards(id) {
     let flashCardsColl = collectionArray.find(function(collection){
       return collection._id === id
