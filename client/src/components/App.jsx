@@ -5,6 +5,7 @@ import Note from "./Note";
 import CreateCollection from "./CreateCollection";
 import FlashCard from "./FlashCard";
 import Grid from "@mui/material/Grid";
+import CollectionUI from "./CollectionUI";
 
 function App() {
   const [collectionArray, setCollectionItems] = useState([]);
@@ -18,7 +19,7 @@ function App() {
       return response.json();
     }).then(function(response){
        setCollectionItems(response)
-       console.log(collectionArray.length);
+       //console.log(collectionArray.length);
     }).catch(err => {
       console.log("Error Reading data " + err);
     });  
@@ -116,6 +117,7 @@ function App() {
                 ))}
               </Grid>
             </div>
+            <CollectionUI onClick={handleCollectionClick}/>
           </div>
         )}
         {collectionClicked && (
