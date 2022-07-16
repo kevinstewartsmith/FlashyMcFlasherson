@@ -121,7 +121,7 @@ app.get("/getCollections", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(foundFCs);
+        //console.log(foundFCs);
         res.json({
           status: "success",
           collectionId: collectionID,
@@ -132,12 +132,6 @@ app.get("/getCollections", (req, res) => {
     //console.log(req.body);
 
   });
-
-  //console.log(req);
-  //res.send(data.length)
-  //res.send({"message": data})
-  
-  //res.json({"message": "Getttttt"})
 
 
 app.post("/addCollection", (req, res) => {
@@ -202,6 +196,35 @@ app.post("/addFlashCard", (req, res) => {
 })
 
 app.post("/deleteFlashCard", (req, res) => {
+  console.log(req.body.flashCardID);
+  const flashCardID = req.body.flashCardID;
+  const collectionID = req.body.collectionID
+  console.log("fuck: " + flashCardID);
+  //You want inventory.items.pull(req.params.itemSku), followed by an inventory.save call. .remove is for top-level documents
+  
+  // FCCollections.flashCards.findOne({_id: collectionID}, function(err,foundCollection){
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.json({message: "fart"})
+      
+  //   }
+  // })
+  FCCollections.findOneAndUpdate( {'flashCards._id' : flashCardID} ,
+  {
+    $pull: { flashCards: { _id: flashCardID }}
+  },
+  function(err, doc){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(doc);
+      res.json({message: "yay"})
+    }
+     
+})
+
+
   
 })
 app.get("/collections/:collectionName", function(req, res) {

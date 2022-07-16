@@ -19,10 +19,8 @@ function handleInputText(event) {
     setFlashCardInfo((prevValue) => {
         if (name === "title" || name ==="cardFront") {
             return {
-                
                 name: value,
-                description: prevValue.content
-            
+                description: prevValue.content            
             };
         } else if (name === "content" || name == "cardBack") {
             return {

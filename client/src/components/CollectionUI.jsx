@@ -20,29 +20,11 @@ function CollectionUI (props) {
         });  
       },[collectionCount]); 
 
-    //   useEffect(() => {
-    //     if (selectedCollection !== "") {
-    //       fetch("/filterFlashCards", {
-    //         method: 'POST',
-    //         // We convert the React state to JSON and send it as the POST body
-    //         body: JSON.stringify({"collectionID": selectedCollection}),
-    //         headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-    //       }).then(function(response){
-    //         return response.json();
-    //       }).then(function(response){
-    //         setFlashCards(response.foundFCs)
-    //         console.log(response.foundFCs);
-    //       }).catch(err => {
-    //         console.log("Error Reading data " + err);
-    //       });
-    //    } 
-    //   },[handleCollectionClick]); 
-
-
+ 
     function collectionChanged(){
-
         setCollectionCount(collectionCount + 1)
     }
+    
     return (
         <div>
             <CreateCollection
@@ -67,7 +49,7 @@ function CollectionUI (props) {
                         alignItems="center"
                     >
                         {collectionArray.map((collection) => (
-                            <Grid item padding={1} xs={4} spacing={3}>
+                            <Grid item padding={1} xs={4} >
                                 <Note
                                     key={collection._id}
                                     id={collection._id}

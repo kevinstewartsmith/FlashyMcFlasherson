@@ -9,6 +9,8 @@ function FlashCardUI(props) {
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
     const [selectedCollection, setSelectedCollection] = useState(props.selectedCollection)
+    const [deletedCard, setDeletedCard] = useState("")
+    
     useEffect(() => {
         if (selectedCollection !== "") {
             fetch("/filterFlashCards", {     
@@ -25,26 +27,28 @@ function FlashCardUI(props) {
                 console.log("Error Reading data " + err);
             });
         } 
-    },[]); 
+    },[fcCount]); 
 
     function flashCardsChanged() {
         setFCCount(fcCount + 1)
     }
+
+
     
     return (
         <div className="body-div">
             <button onClick={props.onClick}>click</button>
             <CreateCollection
-            onAdd={flashCardsChanged}
-            inputType={"collection"}
-            topPlaceholder={"Card Front Text..."}
-            bottomPlaceholder={"Card Back Text..."}
-            topName={"cardFront"}
-            bottomName={"cardBack"}
-            frontRows={3}
-            backRows={3}
-            collectionClicked={props.collectionClicked}
-            selectedCollection={props.selectedCollection} 
+                onAdd={flashCardsChanged}
+                inputType={"collection"}
+                topPlaceholder={"Card Front Text..."}
+                bottomPlaceholder={"Card Back Text..."}
+                topName={"cardFront"}
+                bottomName={"cardBack"}
+                frontRows={3}
+                backRows={3}
+                collectionClicked={props.collectionClicked}
+                selectedCollection={props.selectedCollection} 
             />
         
         <Grid
@@ -56,15 +60,16 @@ function FlashCardUI(props) {
             alignItems="center"
         >
             {flashCards.map((flashCard) => (
-            <Grid item padding={1} xs={4} spacing={3}>
-                <FlashCard
-                key={flashCard._id}
-                id={flashCard._id}
-                front={flashCard.front}
-                back={flashCard.back}
-                collectionID={selectedCollection}
-                />
-            </Grid>
+                <Grid item padding={1} xs={4}>
+                    <FlashCard
+                    key={flashCard._id}
+                    id={flashCard._id}
+                    front={flashCard.front}
+                    back={flashCard.back}
+                    collectionID={selectedCollection}
+                    onDelete={flashCardsChanged}
+                    />
+                </Grid>
             ))}
         </Grid>
       </div>
