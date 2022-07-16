@@ -4,8 +4,9 @@ import Grid from "@mui/material/Grid";
 import Note from "./Note";
 
 function CollectionUI (props) {
-    const [collectionArray, setCollectionItems] = useState([]);
-    const [collectionClicked, setCollectionClicked] = useState(false);
+    const [collectionArray,setCollectionItems] = useState([]);
+    const [collectionClicked,setCollectionClicked] = useState(false);
+    const [collectionCount,setCollectionCount] = useState(0);
     
     useEffect(() => {
         //For loading collections
@@ -17,12 +18,36 @@ function CollectionUI (props) {
         }).catch(err => {
           console.log("Error Reading data " + err);
         });  
-      },[]); 
+      },[collectionCount]); 
 
+    //   useEffect(() => {
+    //     if (selectedCollection !== "") {
+    //       fetch("/filterFlashCards", {
+    //         method: 'POST',
+    //         // We convert the React state to JSON and send it as the POST body
+    //         body: JSON.stringify({"collectionID": selectedCollection}),
+    //         headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+    //       }).then(function(response){
+    //         return response.json();
+    //       }).then(function(response){
+    //         setFlashCards(response.foundFCs)
+    //         console.log(response.foundFCs);
+    //       }).catch(err => {
+    //         console.log("Error Reading data " + err);
+    //       });
+    //    } 
+    //   },[handleCollectionClick]); 
+
+
+    function collectionChanged(){
+
+        setCollectionCount(collectionCount + 1)
+    }
     return (
         <div>
             <CreateCollection
-                //onAdd={props.onAdd}
+                onAdd={collectionChanged}
+                
                 inputType={"collection"}
                 topPlaceholder={"Add Collection"}
                 bottomPlaceholder={"Description (optional)"}
@@ -49,7 +74,7 @@ function CollectionUI (props) {
                                     collectionName={collection.name}
                                     description={collection.description}
                                     onClick={props.onClick}
-                                    //onDelete={deleteCollection}
+                                    onDelete={collectionChanged}
                                 />
                             </Grid>
                         ))}

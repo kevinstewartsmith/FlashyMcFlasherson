@@ -82,8 +82,14 @@ function App() {
       <div className="center-div">
 
         {!collectionClicked && (
-          <div>
-            <CreateCollection
+           <div>
+           <CollectionUI 
+              onClick={handleCollectionClick}
+              //onAdd={addItem}
+              collectionClicked={collectionClicked}
+              selectedCollection={selectedCollection}
+            />
+            {/*<CreateCollection
               onAdd={addItem}
               inputType={"collection"}
               topPlaceholder={"Add Collection"}
@@ -92,7 +98,7 @@ function App() {
               bottomName={"content"}
               collectionClicked={collectionClicked}
               selectedCollection={selectedCollection} 
-            />
+            /> */}
 
             <div>
               <Grid
@@ -117,7 +123,7 @@ function App() {
                 ))}
               </Grid>
             </div>
-            <CollectionUI onClick={handleCollectionClick}/>
+
           </div>
         )}
         {collectionClicked && (
