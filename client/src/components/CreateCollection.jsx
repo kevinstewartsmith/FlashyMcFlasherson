@@ -39,7 +39,7 @@ function CreateCollection(props) {
     const name = collectionInfo.name
     const description = collectionInfo.description
     
-    // if (props.collectionClicked === false) {
+     if (props.collectionClicked === false) {
       fetch('/addCollection', {
         method: 'POST',
         // We convert the React state to JSON and send it as the POST body
@@ -50,7 +50,10 @@ function CreateCollection(props) {
         console.log(response)
         return response.json();
       }).then(function(response){ console.log(response) });
-    // } else {
+      props.onAdd();
+      //collectionInfo
+
+     } else {
     //   console.log("Add Flash Card: " + props.selectedCollection); 
     //   const collection =  props.selectedCollection
     //   fetch('/addFlashCard', {
@@ -63,11 +66,11 @@ function CreateCollection(props) {
     //     console.log(response)
     //     return response.json();
     //   }).then(function(response){ console.log(response) });
+      console.log("Add some shit");
+      props.onAdd(collectionInfo)
+    }
       
       
-    // }
-      
-      props.onAdd();
       setCollectionInfo({ name: "",description: "" });
       event.preventDefault();
     

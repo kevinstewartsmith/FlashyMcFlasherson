@@ -33,13 +33,29 @@ function FlashCardUI(props) {
         setFCCount(fcCount + 1)
     }
 
-
+    function addFlashCard(collectionInfo) {
+        console.log("Add: " + collectionInfo.name);
+        fetch("/addFlashCard", {     
+            method: 'POST',
+            // We convert the React state to JSON and send it as the POST body
+            body: JSON.stringify({"collection" : selectedCollection, "front" : collectionInfo.name, "back" : collectionInfo.description}),
+            headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+        }).then(function(response){
+        return response.json();
+        }).then(function(response){
+            //setFlashCards(response.foundFCs)
+            console.log(response);
+        }).catch(err => {
+            console.log("Error Reading data " + err);
+        });
+        flashCardsChanged()
+    }
     
     return (
         <div className="body-div">
             <button onClick={props.onClick}>click</button>
             <CreateCollection
-                onAdd={flashCardsChanged}
+                onAdd={addFlashCard}
                 inputType={"collection"}
                 topPlaceholder={"Card Front Text..."}
                 bottomPlaceholder={"Card Back Text..."}

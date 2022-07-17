@@ -23,7 +23,7 @@ function App() {
   }
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
-  function addFlashCard() {}
+  
   function filterFlashCards(id) {
     let flashCardsColl = collectionArray.find(function(collection){
       return collection._id === id

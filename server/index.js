@@ -12,22 +12,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 mongoose.connect("mongodb+srv://Kevinstewartsmith:Flashy@cluster0.kvw7r.mongodb.net/FLASHY-DB")
-
-const boot = "booty"
-// mongoose.connection.on('open', function (ref) {
-//   console.log('Connected to mongo server.');
-//   //trying to get collection names
-//   mongoose.connection.db.listCollections().toArray(function (err, names) {
-//       console.log(names); // [{ name: 'dbname.myCollection' }]
-//       module.exports.Collection = names;
-//   });
-// })
-
-
-
-
-
 const PORT = process.env.PORT || 8080;
+
 
 //Database Schemas and Models
 const flashCardSchema = mongoose.Schema({
@@ -67,7 +53,7 @@ const FCCollections = mongoose.model("fc-collection", fcCollectionsSchema);
 
 
 FCCollections.find({}, function(err, foundCollection) {
-  if (err) {console.log("SHIT!: " + err)
+  if (err) {console.log(err)
   } else { 
      //console.log(foundCollection)
      
@@ -84,9 +70,6 @@ FlashCard.find({}, function(err, foundCards) {
 console.log("Server terminal! ccc")
 
 // Have Node serve the files for our built React app
-
-
-
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
@@ -102,11 +85,6 @@ app.get("/getCollections", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      //console.log(foundCollections[0])
-      //data = foundCollections
-      // foundCollections.forEach(function(collection){
-      //   data.push(collection)
-      // })
       data = foundCollections
       res.send(data)
     }
@@ -173,43 +151,52 @@ app.post("/deleteCollection", (req, res) => {
 app.post("/addFlashCard", (req, res) => {
   console.log(req.body)
   const data = req.body
-  FCCollections.findOne({_id: data.collection}, function(err, foundCollection) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(foundCollection);
-      const flashCard =  new FlashCard({
-          front: data.front,
-          back: data.back
-      })
-      flashCard.save()
-      foundCollection.flashCards.push(flashCard);
-      foundCollection.save()
-      res.json({
-        status: "Successfull Added Flash card",
-        front: data.front,
-        back: data.back
-       })
+  console.log(data);
+  const front = req.body.front;
+  const back = req.body.back;
+  const collection = req.body.collection;
+  // FCCollections.findOne({_id: data.collection}, function(err, foundCollection) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log(foundCollection);
+  //     const flashCard =  new FlashCard({
+  //         front: data.front,
+  //         back: data.back
+  //     })
+  //     flashCard.save()
+  //     foundCollection.flashCards.push(flashCard);
+  //     foundCollection.save()
+  //     res.json({
+  //       status: "Successfull Added Flash card",
+  //       front: data.front,
+  //       back: data.back
+  //      })
       
+  //   }
+  // })
+  FCCollections.findOneAndUpdate( {_id : collection} ,
+  {
+    $push: { flashCards: { front: front, back: back }}
+    //{$push: {friends: {firstName: "Harry", lastName: "Potter"}}}
+  },
+  function(err, doc){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(doc);
+      res.json({added: "Success!"})
     }
-  })
+     
+})
+
 })
 
 app.post("/deleteFlashCard", (req, res) => {
   console.log(req.body.flashCardID);
   const flashCardID = req.body.flashCardID;
   const collectionID = req.body.collectionID
-  console.log("fuck: " + flashCardID);
-  //You want inventory.items.pull(req.params.itemSku), followed by an inventory.save call. .remove is for top-level documents
   
-  // FCCollections.flashCards.findOne({_id: collectionID}, function(err,foundCollection){
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     res.json({message: "fart"})
-      
-  //   }
-  // })
   FCCollections.findOneAndUpdate( {'flashCards._id' : flashCardID} ,
   {
     $pull: { flashCards: { _id: flashCardID }}
@@ -219,7 +206,7 @@ app.post("/deleteFlashCard", (req, res) => {
       console.log(err)
     } else {
       console.log(doc);
-      res.json({message: "yay"})
+      res.json({deleted: flashCardID})
     }
      
 })

@@ -24,12 +24,11 @@ function CollectionUI (props) {
     function collectionChanged(){
         setCollectionCount(collectionCount + 1)
     }
-    
+
     return (
         <div>
             <CreateCollection
                 onAdd={collectionChanged}
-                
                 inputType={"collection"}
                 topPlaceholder={"Add Collection"}
                 bottomPlaceholder={"Description (optional)"}
