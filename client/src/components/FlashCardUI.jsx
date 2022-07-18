@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import CreateCollection from "./CreateCollection";
 import Grid from "@mui/material/Grid";
 import FlashCard from "./FlashCard";
+import CreateFlashCard from "./CreateFlashCard";
 
 
 
@@ -34,27 +35,28 @@ function FlashCardUI(props) {
     }
 
     function addFlashCard(collectionInfo) {
-        console.log("Add: " + collectionInfo.name);
-        fetch("/addFlashCard", {     
-            method: 'POST',
-            // We convert the React state to JSON and send it as the POST body
-            body: JSON.stringify({"collection" : selectedCollection, "front" : collectionInfo.name, "back" : collectionInfo.description}),
-            headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-        }).then(function(response){
-        return response.json();
-        }).then(function(response){
-            //setFlashCards(response.foundFCs)
-            console.log(response);
-        }).catch(err => {
-            console.log("Error Reading data " + err);
-        });
+        // console.log("Add: " + collectionInfo.name);
+        // fetch("/addFlashCard", {     
+        //     method: 'POST',
+        //     // We convert the React state to JSON and send it as the POST body
+        //     body: JSON.stringify({"collection" : selectedCollection, "front" : collectionInfo.name, "back" : collectionInfo.description}),
+        //     headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+        // }).then(function(response){
+        // return response.json();
+        // }).then(function(response){
+        //     //setFlashCards(response.foundFCs)
+        //     console.log(response);
+        // }).catch(err => {
+        //     console.log("Error Reading data " + err);
+        // });
+        console.log("Flashy added")
         flashCardsChanged()
     }
     
     return (
         <div className="body-div">
             <button onClick={props.onClick}>click</button>
-            <CreateCollection
+            {/* <CreateCollection
                 onAdd={addFlashCard}
                 inputType={"collection"}
                 topPlaceholder={"Card Front Text..."}
@@ -65,6 +67,12 @@ function FlashCardUI(props) {
                 backRows={3}
                 collectionClicked={props.collectionClicked}
                 selectedCollection={props.selectedCollection} 
+            /> */}
+            <CreateFlashCard 
+                onAdd={flashCardsChanged}
+                inputType={"text"}
+                selectedCollection={selectedCollection}
+
             />
         
         <Grid

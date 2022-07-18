@@ -1,104 +1,100 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
+import Alert from '@mui/material/Alert';
 
+//Center the cards div - check
+//Add bread crumbs
+//add flashcard data
 function CreateFlashCard(props) {
-    
-    const [expanded, setExpansion] = useState(false);
-    const [flashCardInfo, setFlashCardInfo] = useState({ name: "", description: "" });
-
-function handleClick() {
-    
+  const [expanded, setExpansion] = useState(false);
+  const [flashCardData, setFlashCardData] = useState({ front: "", back: "" });
+  const [flashCardHints, setFlashCardHints] = useState({});
+  const [selectedCollection, setSelectedCollection] = useState(props.selectedCollection)
+  
+  function handleClick() {  
     setExpansion(!expanded);
-}
+  }
 
-function handleInputText(event) {
+  function handleInputText(event) {
     const { name, value } = event.target;
 
-    setFlashCardInfo((prevValue) => {
-        if (name === "title" || name ==="cardFront") {
-            return {
-                name: value,
-                description: prevValue.content            
-            };
-        } else if (name === "content" || name == "cardBack") {
-            return {
-                
-                name: prevValue.name,
-                description: value
-            
-            };
-        }
+    setFlashCardData((prevValue) => {
+      if (name === "front") {
+        return {
+          front: value,
+          back: prevValue.back
+        };
+      } else if (name === "back") {
+        return {
+          front: prevValue.front,
+          back: value
+        };
+      }
     });
-}
+  }
 
 
-    function submitNote(event) {
+  function addFlashCard(event) {
+    console.log(flashCardData);
+    const front = flashCardData.front
+    const back = flashCardData.back
+    console.log("Collection: " + selectedCollection);
+    console.log("Front: " + front);
+    console.log("Back: " + back);
+    fetch("/addFlashCard", {     
+        method: 'POST',
+        // We convert the React state to JSON and send it as the POST body
+        body: JSON.stringify({"collection" : selectedCollection, "front" : front, "back" : back}),
+        headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+    }).then(function(response){
+        return response.json();
+    }).then(function(response){
+        //setFlashCards(response.foundFCs)
+        console.log(response);
+    }).catch(err => {
+        console.log("Error Reading data " + err);
+    });
+
+    setFlashCardData({ front: "", back: "" });
+    props.onAdd()
+    event.preventDefault();
     
-        const name = flashCardInfo.name
-        const description = flashCardInfo.description
-        if (collMode === true) {  
-            fetch('/addflashCard', {
-                
-                method: 'POST',
-                body: JSON.stringify({"name": name, "description": description}),
-                headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-            
-            }).then(function(response) {
-                
-                console.log(response)
-                return response.json();
-            
-            }).then(function(response){ console.log(response) });
-        } else {
-            console.log("add flash card") 
-        }
+  }
+
+  return (
+    <div>
+      
+      <form className="create-note">
+        <textarea
+          name={"front"}
+          placeholder={"Front text..."}
+          onClick={handleClick}
+          onChange={handleInputText}
+          type="text"
+          value={flashCardData.front}
+        />
+        <hr/>
+        {expanded ? (
+          <textarea
+            name={"back"}
+            placeholder={"Back text..."}
+            onChange={handleInputText}
+            type="text"
+            value={flashCardData.back}            
+          />
+        ) : null}
         
-        
-        props.onAdd(flashCardInfo);
-        setflashCardInfo({ name: "",description: "" });
-        event.preventDefault();
-    
-    }
 
-    return (
-        <div>
-            
-            <form className="create-note">
-               
-                <input
-                name={props.topName}
-                placeholder={props.topPlaceholder}
-                onClick={handleClick}
-                onChange={handleInputText}
-                type="text"
-                value={flashCardInfo.name}
-           
-            />
-
-            {expanded ? (
-            
-            <textarea
-                name={props.bottomName}
-                onChange={handleInputText}
-                value={flashCardInfo.description}
-                placeholder={props.bottomPlaceholder}
-                //rows={rows}
-                type="text"
-            />
-            
-            ) : null}
-
-                <Zoom in={expanded}>
-                    <Fab onClick={submitNote}>
-                        <AddIcon />
-                    </Fab>
-                </Zoom>
-            
-            </form>
-       
-        </div>
+        <Zoom in={expanded}>
+          <Fab onClick={addFlashCard}>
+            <AddIcon />
+          </Fab>
+        </Zoom>
+      </form>
+    </div>
   );
 }
-export default CreateflashCard;
+export default CreateFlashCard;

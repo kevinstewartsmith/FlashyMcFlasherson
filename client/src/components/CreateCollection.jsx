@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
+import Alert from '@mui/material/Alert';
 
 //Center the cards div - check
 //Add bread crumbs
@@ -78,6 +79,7 @@ function CreateCollection(props) {
 
   return (
     <div>
+      
       <form className="create-note">
         <input
           name={props.topName}
@@ -97,6 +99,7 @@ function CreateCollection(props) {
             type="text"
           />
         ) : null}
+        
 
         <Zoom in={expanded}>
           <Fab onClick={submitNote}>

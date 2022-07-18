@@ -51,7 +51,6 @@ const FCCollections = mongoose.model("fc-collection", fcCollectionsSchema);
 
 //End of Database
 
-
 FCCollections.find({}, function(err, foundCollection) {
   if (err) {console.log(err)
   } else { 
@@ -149,32 +148,11 @@ app.post("/deleteCollection", (req, res) => {
 
 })
 app.post("/addFlashCard", (req, res) => {
-  console.log(req.body)
   const data = req.body
-  console.log(data);
   const front = req.body.front;
   const back = req.body.back;
   const collection = req.body.collection;
-  // FCCollections.findOne({_id: data.collection}, function(err, foundCollection) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log(foundCollection);
-  //     const flashCard =  new FlashCard({
-  //         front: data.front,
-  //         back: data.back
-  //     })
-  //     flashCard.save()
-  //     foundCollection.flashCards.push(flashCard);
-  //     foundCollection.save()
-  //     res.json({
-  //       status: "Successfull Added Flash card",
-  //       front: data.front,
-  //       back: data.back
-  //      })
-      
-  //   }
-  // })
+
   FCCollections.findOneAndUpdate( {_id : collection} ,
   {
     $push: { flashCards: { front: front, back: back }}
@@ -184,11 +162,10 @@ app.post("/addFlashCard", (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      console.log(doc);
       res.json({added: "Success!"})
     }
      
-})
+  })
 
 })
 
@@ -209,7 +186,7 @@ app.post("/deleteFlashCard", (req, res) => {
       res.json({deleted: flashCardID})
     }
      
-})
+  })
 
 
   
