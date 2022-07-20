@@ -31,7 +31,6 @@ function CreateCollection(props) {
     });
   }
 
-
   function submitNote(event) {
     console.log("submiTTT Note");
     const name = collectionData.name

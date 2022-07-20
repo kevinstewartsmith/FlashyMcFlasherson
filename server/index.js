@@ -152,20 +152,23 @@ app.post("/addFlashCard", (req, res) => {
   const front = req.body.front;
   const back = req.body.back;
   const collection = req.body.collection;
-
-  FCCollections.findOneAndUpdate( {_id : collection} ,
-  {
-    $push: { flashCards: { front: front, back: back }}
-    //{$push: {friends: {firstName: "Harry", lastName: "Potter"}}}
-  },
-  function(err, doc){
-    if (err) {
-      console.log(err)
-    } else {
-      res.json({added: "Success!"})
-    }
-     
-  })
+  if (front !== "" && front !== null && back !=="" && back !=="") {
+    FCCollections.findOneAndUpdate( {_id : collection} ,
+    {
+      $push: { flashCards: { front: front, back: back }}
+      //{$push: {friends: {firstName: "Harry", lastName: "Potter"}}}
+    },
+    function(err, doc){
+      if (err) {
+        console.log(err)
+      } else {
+        res.json({added: "Success!"})
+      }
+      
+    })
+  } else {
+    res.json({added: "Flashcards must have content in both fields!"})
+  }
 
 })
 

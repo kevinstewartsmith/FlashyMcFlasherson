@@ -43,27 +43,27 @@ function CollectionUI (props) {
             />
 
             <div>
-                    <Grid
-                        container
-                        //rowSpacing={1}
-                        spacing={2}
-                        //columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        justify="space-evenly"
-                        alignItems="center"
-                    >
-                        {collectionArray.map((collection) => (
-                            <Grid item padding={1} xs={4} >
-                                <Note
-                                    key={collection._id}
-                                    id={collection._id}
-                                    collectionName={collection.name}
-                                    description={collection.description}
-                                    onClick={collectionClicked}
-                                    onDelete={collectionChanged}
-                                />
-                            </Grid>
-                        ))}
-                    </Grid>
+                <Grid
+                    container
+                    //rowSpacing={1}
+                    spacing={2}
+                    //columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    justify="space-evenly"
+                    alignItems="center"
+                >
+                    {collectionArray.map((collection) => (
+                        <Grid item padding={1} xs={4} >
+                            <Note
+                                key={collection._id}
+                                id={collection._id}
+                                collectionName={collection.name}
+                                description={collection.description}
+                                onClick={collectionClicked}
+                                onDelete={collectionChanged}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
             </div>
         </div>
     )

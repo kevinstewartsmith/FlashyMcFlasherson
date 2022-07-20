@@ -29,17 +29,18 @@ function App() {
           <div>
             <CollectionUI 
               collectionClicked={handleCollectionClick}
-              //collectionSelected={collectionClicked}
               selectedCollection={selectedCollection}
             />
           </div>
         )}
         {collectionClicked && (
-          <FlashCardUI
-            onClick={backButtonPressed}
-            collectionClicked={collectionClicked}
-            selectedCollection={selectedCollection}
-          />  
+          <div>
+            <FlashCardUI
+              onClick={backButtonPressed}
+              collectionClicked={collectionClicked}
+              selectedCollection={selectedCollection}
+            />  
+          </div>
         )}
       </div>
       <Footer />
