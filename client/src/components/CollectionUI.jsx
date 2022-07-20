@@ -5,7 +5,7 @@ import Note from "./Note";
 
 function CollectionUI (props) {
     const [collectionArray,setCollectionItems] = useState([]);
-    const [collectionClicked,setCollectionClicked] = useState(false);
+    const [selectedCollection,setSelectedCollection] = useState(false);
     const [collectionCount,setCollectionCount] = useState(0);
     
     useEffect(() => {
@@ -20,7 +20,11 @@ function CollectionUI (props) {
         });  
       },[collectionCount]); 
 
- 
+    function collectionClicked(collectionID) {
+        console.log("Collection Clicked Collection UI");
+        console.log("id:" + collectionID);
+        props.collectionClicked(collectionID)
+    }
     function collectionChanged(){
         setCollectionCount(collectionCount + 1)
     }
@@ -34,8 +38,8 @@ function CollectionUI (props) {
                 bottomPlaceholder={"Description (optional)"}
                 topName={"title"}
                 bottomName={"content"}
-                collectionClicked={props.collectionClicked}
-                selectedCollection={props.selectedCollection} 
+                selectedCollection={selectedCollection}
+                //selectedCollection={props.selectedCollection} 
             />
 
             <div>
@@ -54,7 +58,7 @@ function CollectionUI (props) {
                                     id={collection._id}
                                     collectionName={collection.name}
                                     description={collection.description}
-                                    onClick={props.onClick}
+                                    onClick={collectionClicked}
                                     onDelete={collectionChanged}
                                 />
                             </Grid>

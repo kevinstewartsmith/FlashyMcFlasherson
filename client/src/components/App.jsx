@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import Note from "./Note";
-import CreateCollection from "./CreateCollection";
-import FlashCard from "./FlashCard";
-import Grid from "@mui/material/Grid";
 import CollectionUI from "./CollectionUI";
 import FlashCardUI from "./FlashCardUI";
 
 function App() {
-  const [collectionArray, setCollectionItems] = useState([]);
   const [collectionClicked, setCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState("");
-  const [flashCards, setFlashCards] = useState([])
   
-
-  function handleCollectionClick(id) {
-    setSelectedCollection(id)
-    
+  function handleCollectionClick(collectionID) {
+    console.log("Collection click App: " + collectionID);
+    setSelectedCollection(collectionID) 
     changeView()
-
+  }
+  function backButtonPressed() {
+    setSelectedCollection("") 
+    changeView()
   }
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
-  
-  function filterFlashCards(id) {
-    let flashCardsColl = collectionArray.find(function(collection){
-      return collection._id === id
-    })
-    setFlashCards(flashCardsColl.flashCards)
-  }
-  
 
   return (
     <div>
@@ -40,17 +28,15 @@ function App() {
         {!collectionClicked && (
           <div>
             <CollectionUI 
-              onClick={handleCollectionClick}
-              //onAdd={addItem}
-              collectionClicked={collectionClicked}
+              collectionClicked={handleCollectionClick}
+              //collectionSelected={collectionClicked}
               selectedCollection={selectedCollection}
             />
           </div>
         )}
         {collectionClicked && (
           <FlashCardUI
-            onClick={handleCollectionClick}
-            //onAdd={addItem}
+            onClick={backButtonPressed}
             collectionClicked={collectionClicked}
             selectedCollection={selectedCollection}
           />  

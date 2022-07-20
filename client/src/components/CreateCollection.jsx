@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
 import Alert from '@mui/material/Alert';
 
-//Center the cards div - check
-//Add bread crumbs
-//add flashcard data
+
 function CreateCollection(props) {
   const [expanded, setExpansion] = useState(false);
-  const [collectionInfo, setCollectionInfo] = useState({ name: "", description: "" });
+  const [collectionData, setCollectionData] = useState({ name: "", description: "" });
   
   function handleClick() {  
     setExpansion(!expanded);
@@ -19,7 +16,7 @@ function CreateCollection(props) {
   function handleInputText(event) {
     const { name, value } = event.target;
 
-    setCollectionInfo((prevValue) => {
+    setCollectionData((prevValue) => {
       if (name === "title" || name ==="cardFront") {
         return {
           name: value,
@@ -36,11 +33,9 @@ function CreateCollection(props) {
 
 
   function submitNote(event) {
-    
-    const name = collectionInfo.name
-    const description = collectionInfo.description
-    
-     if (props.collectionClicked === false) {
+    console.log("submiTTT Note");
+    const name = collectionData.name
+    const description = collectionData.description
       fetch('/addCollection', {
         method: 'POST',
         // We convert the React state to JSON and send it as the POST body
@@ -52,27 +47,10 @@ function CreateCollection(props) {
         return response.json();
       }).then(function(response){ console.log(response) });
       props.onAdd();
-      //collectionInfo
-
-     } else {
-    //   console.log("Add Flash Card: " + props.selectedCollection); 
-    //   const collection =  props.selectedCollection
-    //   fetch('/addFlashCard', {
-    //     method: 'POST',
-    //     // We convert the React state to JSON and send it as the POST body
-    //     body: JSON.stringify({"collection": collection, "front": name, "back": description}),
-    //     headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-
-    //   }).then(function(response) {
-    //     console.log(response)
-    //     return response.json();
-    //   }).then(function(response){ console.log(response) });
       console.log("Add some shit");
-      props.onAdd(collectionInfo)
-    }
-      
-      
-      setCollectionInfo({ name: "",description: "" });
+
+            
+      setCollectionData({ name: "",description: "" });
       event.preventDefault();
     
   }
@@ -87,13 +65,13 @@ function CreateCollection(props) {
           onClick={handleClick}
           onChange={handleInputText}
           type="text"
-          value={collectionInfo.name}
+          value={collectionData.name}
         />
         {expanded ? (
           <textarea
             name={props.bottomName}
             onChange={handleInputText}
-            value={collectionInfo.description}
+            value={collectionData.description}
             placeholder={props.bottomPlaceholder}
             //rows={rows}
             type="text"
