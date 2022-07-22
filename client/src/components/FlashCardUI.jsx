@@ -3,7 +3,8 @@ import CreateCollection from "./CreateCollection";
 import Grid from "@mui/material/Grid";
 import FlashCard from "./FlashCard";
 import CreateFlashCard from "./CreateFlashCard";
-
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
 
 
 function FlashCardUI(props) {
@@ -96,6 +97,7 @@ function FlashCardUI(props) {
                 </Grid>
             ))}
         </Grid>
+        
       </div>
     )
 }
