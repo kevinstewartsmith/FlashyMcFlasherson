@@ -5,20 +5,22 @@ import FlashCard from "./FlashCard";
 import CreateFlashCard from "./CreateFlashCard";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
+import {useParams} from "react-router-dom";
 
 
 function FlashCardUI(props) {
+    const { collectionName } = useParams()
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
     const [selectedCollection, setSelectedCollection] = useState(props.selectedCollection)
     const [deletedCard, setDeletedCard] = useState("")
     
     useEffect(() => {
-        if (selectedCollection !== "") {
+        if (collectionName !== "") {
             fetch("/filterFlashCards", {     
                 method: 'POST',
                 // We convert the React state to JSON and send it as the POST body
-                body: JSON.stringify({"collectionID": selectedCollection}),
+                body: JSON.stringify({"collectionID": collectionName}),
                 headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
             }).then(function(response){
             return response.json();
@@ -57,22 +59,11 @@ function FlashCardUI(props) {
     return (
         <div className="body-div">
             <button onClick={props.onClick}>click</button>
-            {/* <CreateCollection
-                onAdd={addFlashCard}
-                inputType={"collection"}
-                topPlaceholder={"Card Front Text..."}
-                bottomPlaceholder={"Card Back Text..."}
-                topName={"cardFront"}
-                bottomName={"cardBack"}
-                frontRows={3}
-                backRows={3}
-                collectionClicked={props.collectionClicked}
-                selectedCollection={props.selectedCollection} 
-            /> */}
+
             <CreateFlashCard 
                 onAdd={flashCardsChanged}
                 inputType={"text"}
-                selectedCollection={selectedCollection}
+                selectedCollection={collectionName}
 
             />
         
@@ -91,7 +82,7 @@ function FlashCardUI(props) {
                     id={flashCard._id}
                     front={flashCard.front}
                     back={flashCard.back}
-                    collectionID={selectedCollection}
+                    collectionID={collectionName}
                     onDelete={flashCardsChanged}
                     />
                 </Grid>

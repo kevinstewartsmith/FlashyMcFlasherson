@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import CreateCollection from "./CreateCollection";
 import Grid from "@mui/material/Grid";
 import Note from "./Note";
 
 function CollectionUI (props) {
+    const navigate = useNavigate();
     const [collectionArray,setCollectionItems] = useState([]);
     const [selectedCollection,setSelectedCollection] = useState(false);
     const [collectionCount,setCollectionCount] = useState(0);
@@ -58,7 +60,7 @@ function CollectionUI (props) {
                                 id={collection._id}
                                 collectionName={collection.name}
                                 description={collection.description}
-                                onClick={collectionClicked}
+                                onClick={() => { navigate("/collections/" + collection._id) }}
                                 onDelete={collectionChanged}
                             />
                         </Grid>

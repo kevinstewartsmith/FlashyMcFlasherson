@@ -32,7 +32,6 @@ function CreateCollection(props) {
   }
 
   function submitNote(event) {
-    console.log("submiTTT Note");
     const name = collectionData.name
     const description = collectionData.description
       fetch('/addCollection', {
@@ -40,23 +39,18 @@ function CreateCollection(props) {
         // We convert the React state to JSON and send it as the POST body
         body: JSON.stringify({"name": name, "description": description}),
         headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
-
       }).then(function(response) {
         console.log(response)
         return response.json();
       }).then(function(response){ console.log(response) });
       props.onAdd();
-      console.log("Add some shit");
-
-            
+      console.log("Add some shit");      
       setCollectionData({ name: "",description: "" });
-      event.preventDefault();
-    
+      event.preventDefault();  
   }
 
   return (
-    <div>
-      
+    <div>  
       <form className="create-note">
         <input
           name={props.topName}
@@ -77,7 +71,6 @@ function CreateCollection(props) {
           />
         ) : null}
         
-
         <Zoom in={expanded}>
           <Fab onClick={submitNote}>
             <AddIcon />
