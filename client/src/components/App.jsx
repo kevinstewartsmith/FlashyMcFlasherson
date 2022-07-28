@@ -3,8 +3,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CollectionUI from "./CollectionUI";
 import FlashCardUI from "./FlashCardUI";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
-import FlashCard from "./FlashCard";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import BreadcrumbsUI  from "./BreadcrumbsUI";
+import Deck from "./Deck"
+
 
 function App() {
   const [collectionClicked, setCollectionClicked] = useState(false);
@@ -19,6 +21,7 @@ function App() {
     setSelectedCollection("") 
     changeView()
   }
+  function handleBreadCrumbClick() {}
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
 
@@ -27,11 +30,16 @@ function App() {
       
         <Header />
         <div className="center-div">
+        
+        <div role="presentation" onClick={handleBreadCrumbClick}>
+        <BreadcrumbsUI/>
+        </div>
+
         <Routes>
           <Route path="/" element={<CollectionUI />} />
           <Route path="/collections/:collectionName" 
             element={<FlashCardUI />} />
-          <Route path="/flashcard"  element={<Test />} />
+          <Route path="/deck"  element={<Deck />} />
         </Routes>
         </div>
         <Footer />
@@ -39,9 +47,5 @@ function App() {
     </Router>
   );
 }
-const Test = () => (
-  <div>
-    <h1>Test</h1>
-  </div>
-)
+
 export default App;

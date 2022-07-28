@@ -5,15 +5,30 @@ import FlashCard from "./FlashCard";
 import CreateFlashCard from "./CreateFlashCard";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import {useParams} from "react-router-dom";
+import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import { Games } from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 
 
 function FlashCardUI(props) {
     const { collectionName } = useParams()
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
-    const [selectedCollection, setSelectedCollection] = useState(props.selectedCollection)
-    const [deletedCard, setDeletedCard] = useState("")
+
+    const actions = [
+        { icon: <ViewCarouselIcon />, name: 'Review Flashcards' },
+        { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
+        { icon: <PsychologyIcon/>, name: 'Games'},
+        { icon: <EditIcon />, name: 'Edit Flashcards'}
+      ];
     
     useEffect(() => {
         if (collectionName !== "") {
@@ -88,6 +103,19 @@ function FlashCardUI(props) {
                 </Grid>
             ))}
         </Grid>
+        <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: 'fixed', bottom: 32, right: 32 }}
+        icon={<SpeedDialIcon />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+          />
+        ))}
+      </SpeedDial>
         
       </div>
     )
