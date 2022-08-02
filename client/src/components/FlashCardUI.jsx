@@ -12,15 +12,17 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import { Games } from "@mui/icons-material";
 import EditIcon from '@mui/icons-material/Edit';
+import { Link } from "react-router-dom";
 
 
 function FlashCardUI(props) {
     const { collectionName } = useParams()
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
-
+    const withLink = (to, children) => <Link to={to}>{children}</Link>;
+   // onClick={() => { navigate("/collections/" + collection._id) }}
     const actions = [
-        { icon: <ViewCarouselIcon />, name: 'Review Flashcards' },
+        { icon: withLink("/deck/" + collectionName, <ViewCarouselIcon />), name: 'Review Flashcards' },
         { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
         { icon: <PsychologyIcon/>, name: 'Games'},
         { icon: <EditIcon />, name: 'Edit Flashcards'}
