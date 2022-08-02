@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useSprings, animated, interpolate } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import FlashCard from './FlashCard'
+import DeckCard from './DeckCard'
+import {useParams} from "react-router-dom";
+
 
 const cards = [
     'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
@@ -18,8 +20,9 @@ const cards = [
   // This is being used down there in the view, it interpolates rotation and scale into a css transform
   const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-
+  
 function Deck() {
+    const { collectionName } = useParams()
     const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
     const [props, set] = useSprings(cards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
     // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
@@ -41,16 +44,19 @@ function Deck() {
 
 
     return props.map(({ x, y, rot, scale }, i) => (
-        <div className=".center-div">
+        <div className=""> 
             <div className="deck-container">
             <animated.div className="spring-parent" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
             {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-                <animated.div onClick={() => console.log("Deck Clicked")}className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
-                <FlashCard />
+                <animated.div onClick={() => console.log("Deck Clicked")} className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
+                <DeckCard 
+                    front={collectionName} 
+                    back="Back" 
+                />
                 </animated.div>
             </animated.div>
             </div>
-        </div>
+        </div> 
       ))
 }
 

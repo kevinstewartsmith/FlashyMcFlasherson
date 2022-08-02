@@ -4,7 +4,7 @@ import FlashOnIcon from '@mui/icons-material/FlashOn';
 function Header() {
   return (
     <header>
-      <h1>{<FlashOnIcon />} Flashy McFlasherson {<FlashOnIcon />}</h1>
+      <h1>Flashy {<FlashOnIcon fontSize="large" />}McFlasherson</h1>
     </header>
   );
 }

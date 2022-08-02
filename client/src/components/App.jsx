@@ -36,10 +36,30 @@ function App() {
         </div>
 
         <Routes>
-          <Route path="/" element={<CollectionUI />} />
-          <Route path="/collections/:collectionName" 
-            element={<FlashCardUI />} />
-          <Route path="/deck"  element={<Deck />} />
+
+          <Route 
+            path="/" 
+            element={<CollectionUI />} 
+
+          />
+          
+          <Route 
+            path="/collections/:collectionName" 
+            element={<FlashCardUI />}     
+          />
+          
+          <Route path="/deck" >
+            <Route path=":collectionName" element={<Deck />} />
+          </Route>
+
+          <Route 
+            path="/deck"  
+            element={<Deck />} 
+          />
+
+
+          <Route path="*" element={<CollectionUI />}/>
+
         </Routes>
         </div>
         <Footer />
