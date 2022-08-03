@@ -19,14 +19,9 @@ function FlashCardUI(props) {
     const { collectionName } = useParams()
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
-    const withLink = (to, children) => <Link to={to}>{children}</Link>;
-   // onClick={() => { navigate("/collections/" + collection._id) }}
-    const actions = [
-        { icon: withLink("/deck/" + collectionName, <ViewCarouselIcon />), name: 'Review Flashcards' },
-        { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
-        { icon: <PsychologyIcon/>, name: 'Games'},
-        { icon: <EditIcon />, name: 'Edit Flashcards'}
-      ];
+    
+
+
     
     useEffect(() => {
         if (collectionName !== "") {
@@ -45,6 +40,15 @@ function FlashCardUI(props) {
             });
         } 
     },[fcCount]); 
+
+    const withLink = (to, children) => <Link to={to}>{children}</Link>;
+       {/* // onClick={() => { navigate("/collections/" + collection._id) }} */}
+       const actions = [
+        { icon: <Link to={"/deck/" + collectionName} state={{flashCards: flashCards}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
+        { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
+        { icon: <PsychologyIcon/>, name: 'Games'},
+        { icon: <EditIcon />, name: 'Edit Flashcards'}
+      ];
 
     function flashCardsChanged() {
         setFCCount(fcCount + 1)

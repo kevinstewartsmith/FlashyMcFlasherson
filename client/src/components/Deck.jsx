@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSprings, animated, interpolate } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import DeckCard from './DeckCard'
-import {useParams} from "react-router-dom";
+import {useParams, useLocation} from "react-router-dom";
 
 
 const cards = [
@@ -21,10 +21,15 @@ const cards = [
   const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
   
-function Deck() {
+function Deck(params) {
     const { collectionName } = useParams()
+    const location = useLocation()
+    console.log("State:");
+    console.log(location.state.flashCards);
+    const flashCards = location.state.flashCards
+    //const  flashCards  = location.state.flashCards
     const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
-    const [props, set] = useSprings(cards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
+    const [props, set] = useSprings(flashCards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
     // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
     const bind = useDrag(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
     console.log("Use gesture");
@@ -39,7 +44,7 @@ function Deck() {
         const scale = down ? 1.1 : 1 // Active cards lift up a bit
         return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
       })
-      if (!down && gone.size === cards.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
+      if (!down && gone.size === flashCards.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
     })
 
 
@@ -50,10 +55,11 @@ function Deck() {
             {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
                 <animated.div onClick={() => console.log("Deck Clicked")} className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
                 <DeckCard 
-                    front={collectionName} 
-                    back="Back" 
+                    front={flashCards[i].front} 
+                    back={flashCards[i].back} 
                 />
                 </animated.div>
+                {/* {console.log(flashCards)} */}
             </animated.div>
             </div>
         </div> 
