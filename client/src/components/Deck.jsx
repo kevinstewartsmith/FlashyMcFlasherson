@@ -48,22 +48,21 @@ function Deck(params) {
     })
 
 
-    return props.map(({ x, y, rot, scale }, i) => (
+    return ( props.map(({ x, y, rot, scale }, i) => (
         <div className=""> 
             <div className="deck-container">
-            <animated.div className="spring-parent" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-            {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-                <animated.div onClick={() => console.log("Deck Clicked")} className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
-                <DeckCard 
-                    front={flashCards[i].front} 
-                    back={flashCards[i].back} 
-                />
+                <animated.div className="spring-parent" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+                    {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+                    <animated.div onClick={() => console.log("Deck Clicked")} className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
+                        <DeckCard 
+                            front={flashCards[i].front} 
+                            back={flashCards[i].back} 
+                        />
+                    </animated.div>
                 </animated.div>
-                {/* {console.log(flashCards)} */}
-            </animated.div>
             </div>
         </div> 
-      ))
+      )))
 }
 
 export default Deck;

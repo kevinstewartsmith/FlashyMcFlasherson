@@ -12,15 +12,15 @@ function App() {
   const [collectionClicked, setCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState("");
   
-  function handleCollectionClick(collectionID) {
-    console.log("Collection click App: " + collectionID);
-    setSelectedCollection(collectionID) 
-    changeView()
-  }
-  function backButtonPressed() {
-    setSelectedCollection("") 
-    changeView()
-  }
+  // function handleCollectionClick(collectionID) {
+  //   console.log("Collection click App: " + collectionID);
+  //   setSelectedCollection(collectionID) 
+  //   changeView()
+  // }
+  // function backButtonPressed() {
+  //   setSelectedCollection("") 
+  //   changeView()
+  // }
   function handleBreadCrumbClick() {}
   
   function changeView(){  setCollectionClicked(!collectionClicked) }
@@ -47,7 +47,7 @@ function App() {
             path="/collections/:collectionName" 
             element={<FlashCardUI />}     
           />
-          
+
           <Route path="/deck" >
             <Route path=":collectionName" element={<Deck />} />
           </Route>
