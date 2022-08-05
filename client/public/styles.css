@@ -10,6 +10,7 @@ html {
 body {
   background: #eee;
   background-color: #577191;
+  /* background-color: white; */
   background-image: url("https://www.transparenttextures.com/patterns/washi.png");
   padding: 0 16px;
   overflow-x: hidden;
@@ -298,17 +299,18 @@ form.create-note button {
 }
 
 .deck-container {
-  position: absolute;
+  position: relative;
   background: clear;
+  display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 100vw;
-  height: 100vh; */
-  margin-right: 0;
-  margin-left: 0;
+  width: 600px;
+  height: 440px; 
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 50px;
   margin-bottom: auto;
-  
+  background-color: clear;
   /* overflow: hidden; */
   /* width: 100%;
   height: 100%; */
@@ -317,9 +319,12 @@ form.create-note button {
 }
 
 .desk {
-  position: fixed;
+  position: absolute;
   height: 100%;
-  width: 100%;
+  width: 80%;
+  
+  background-color: clear;
   display: flex;
-  background-color: pink;
+  align-items: center;
+  justify-content: center;
 }

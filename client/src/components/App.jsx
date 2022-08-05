@@ -6,6 +6,7 @@ import FlashCardUI from "./FlashCardUI";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import BreadcrumbsUI  from "./BreadcrumbsUI";
 import Deck from "./Deck"
+import Desk from "./Desk"
 
 
 function App() {
@@ -40,7 +41,6 @@ function App() {
           <Route 
             path="/" 
             element={<CollectionUI />} 
-
           />
           
           <Route 
@@ -57,6 +57,9 @@ function App() {
             element={<Deck />} 
           />
 
+          <Route path="/desk/" >
+            <Route path=":collectionName" element={<Desk />} />
+          </Route>
 
           <Route path="*" element={<CollectionUI />}/>
 

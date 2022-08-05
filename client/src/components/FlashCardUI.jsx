@@ -44,7 +44,7 @@ function FlashCardUI(props) {
     const withLink = (to, children) => <Link to={to}>{children}</Link>;
        {/* // onClick={() => { navigate("/collections/" + collection._id) }} */}
        const actions = [
-        { icon: <Link to={"/deck/" + collectionName} state={{flashCards: flashCards}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
+        { icon: <Link to={"/desk/" + collectionName} state={{flashCards: flashCards}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
         { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
         { icon: <PsychologyIcon/>, name: 'Games'},
         { icon: <EditIcon />, name: 'Edit Flashcards'}

@@ -26,7 +26,9 @@ function Deck(params) {
     const location = useLocation()
     console.log("State:");
     console.log(location.state.flashCards);
-    const flashCards = location.state.flashCards
+    // const flashCards = location.state.flashCards
+    const flashCards = params.flashCards
+
     //const  flashCards  = location.state.flashCards
     const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
     const [props, set] = useSprings(flashCards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
@@ -48,9 +50,9 @@ function Deck(params) {
     })
 
 
-    return ( props.map(({ x, y, rot, scale }, i) => (
-        <div className=""> 
-            <div className="deck-container">
+    return  props.map(({ x, y, rot, scale }, i) => (
+        // <div className=""> 
+        //     <div className="deck-container">
                 <animated.div className="spring-parent" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
                     {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
                     <animated.div onClick={() => console.log("Deck Clicked")} className="spring-child" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} >
@@ -60,9 +62,9 @@ function Deck(params) {
                         />
                     </animated.div>
                 </animated.div>
-            </div>
-        </div> 
-      )))
+        //     </div>
+        // </div> 
+      ))
 }
 
 export default Deck;
