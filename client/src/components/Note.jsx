@@ -41,7 +41,7 @@ function Note(props) {
       <div className="note-div">
         <div className="center">
           <h1>{props.collectionName}</h1>
-          <p>{mouseEntered ? props.description +": " + props.id : null}</p>
+          <p>{mouseEntered ? props.description  : null}</p>
           
         </div>
         
@@ -50,9 +50,9 @@ function Note(props) {
     </div>
     
     <div className="delete-button-container">
-    {/* <button className="delete-button" onClick={clickDelete}> <DeleteOutlinedIcon /></button> */}
-    
-    <DeleteOutlinedIcon className="delete-button" onClick={clickDelete}/>
+      {/* <button className="delete-button" onClick={clickDelete}> <DeleteOutlinedIcon /></button> */}
+      
+      {/* <DeleteOutlinedIcon className="delete-button" onClick={clickDelete}/> */}
     
     </div>
     

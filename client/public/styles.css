@@ -5,16 +5,19 @@
 }
 html {
   font-family: "Montserrat", sans-serif;
-  overscroll-behavior-y: contain
+  overscroll-behavior-y: contain;
+  
 }
 body {
   background: #eee;
-  background-color: #577191;
+  /* background-color: #577191; */
+  background-color: lightblue;
   /* background-color: white; */
   background-image: url("https://www.transparenttextures.com/patterns/washi.png");
   padding: 0 16px;
   overflow-x: hidden;
-  overscroll-behavior-x: contain
+  overscroll-behavior-x: contain;
+  
 }
 
 header {
@@ -63,7 +66,7 @@ footer p {
 .flash-card {
   background: clear;
   border-radius: 7px;
-  box-shadow: 0 2px 5px rgb(100, 95, 95);
+  /* box-shadow: 0 2px 5px rgb(100, 95, 95); */
   padding: 0px;
   width: 320px;
   height: 180px;
@@ -165,7 +168,7 @@ footer p {
   height: 100%;
   padding-top: 16px;
   padding-bottom: 24px;
-  overflow: hidden;
+  /* overflow: hidden; */
   align-items: center;
 }
 .center-div {
@@ -182,9 +185,9 @@ footer p {
 form.create-note {
   position: relative;
   width: 480px;
-  margin: 30px auto 20px auto;
+  margin: 30px auto 50px auto;
   background: #fff;
-  padding: 15px;
+  padding: 25px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
@@ -215,7 +218,7 @@ form.create-note button {
 form.create-note {
   position: relative;
   width: 480px;
-  margin: 30px auto 20px auto;
+  margin: 30px auto 70px auto;
   background: #fff;
   padding: 15px;
   border-radius: 7px;
@@ -260,15 +263,17 @@ form.create-note button {
 }
 
 .delete-button {
-  position: absolute;
+  /* position: relative;
   border-color: clear;
   background-color: clear;
+  margin-left: 0px; */
 }
 .delete-button-container {
-  position: relative;
+  position: absolute;
   display: inline-block;
-  top: 126px;
-  left: -26px;
+  /* top: 126px;
+  left: -26px; */
+  
 }
 
 .spring-parent {
@@ -315,7 +320,7 @@ form.create-note button {
   /* width: 100%;
   height: 100%; */
   /* margin-left: 240px; */
-  cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 39 39, auto;
+  
 }
 
 .desk {
@@ -327,4 +332,33 @@ form.create-note button {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 30 30, auto;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: clear;
+  left: auto;
+  right: auto;
+  
+}
+.center  h1 {
+  font-size: 1.5rem;
+  word-wrap: break-word;
+}
+.center  p {
+  color: gray;
+}
+.card-options {
+  background-color: clear;
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 150px;
+  margin: auto auto;
+  margin-top: 35%;
+  margin-left: 58%;
+  border-radius: 0px;
 }

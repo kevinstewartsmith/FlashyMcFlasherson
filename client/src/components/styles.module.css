@@ -23,12 +23,12 @@
 .front,
 .back {
   background-size: cover;
-  box-shadow: 0 3px 50px rgba(0, 1, 0, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 1, 0, 0.3);
 }
 
 .back {
   /*background-image: url(https://images.unsplash.com/photo-1544511916-0148ccdeb877?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1901&q=80i&auto=format&fit=crop);*/
-  background-color: green;
+  background-color: white;
   
   
 }

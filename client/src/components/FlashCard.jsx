@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
 import styles from "./styles.module.css";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { PropaneSharp } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import CardOptions from "./CardOptions";
 
 export default function FlashCard(props) {
   const [flipped, set] = useState(true);
@@ -12,12 +10,13 @@ export default function FlashCard(props) {
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 }
   });
-
+  const editMode = props.editMode;
   // function deleteFlashCard() {
   //   console.log("Flashcard deleted: " + props.id)
   //   const id = props.id
   //   props.onDelete(id)
   // }
+  function editFlashCard() {console.log("Edit flashcard");}
 
   function deleteFlashCard() {
     console.log("FC UI Deleted card ID: " + props.id);
@@ -67,13 +66,21 @@ export default function FlashCard(props) {
             >
               <div className="center">
                 <h1>{props.back}</h1>
-                <h1>{props.collectionID}</h1>
+                {/* <h1>{props.collectionID}</h1> */}
               </div>
             </a.div>
           </div>
-          <DeleteOutlinedIcon className="delete-button" onClick={deleteFlashCard}/>  
+
+          
         </div>  
+        
       </div>
+      { editMode ? 
+      <CardOptions
+        deleteFlashCard={deleteFlashCard}
+        editFlashCard={editFlashCard}
+      /> : null}
+      
     </div>
   );
 }
