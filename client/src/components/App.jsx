@@ -44,7 +44,7 @@ function App() {
           />
           
           <Route 
-            path="/collections/:collectionName" 
+            path="/collections/:collectionID" 
             element={<FlashCardUI />}     
           />
 

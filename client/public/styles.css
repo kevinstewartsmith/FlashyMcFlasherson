@@ -12,8 +12,10 @@ body {
   background: #eee;
   /* background-color: #577191; */
   background-color: lightblue;
+  
+  /* background-color: black; */
   /* background-color: white; */
-  background-image: url("https://www.transparenttextures.com/patterns/washi.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/washi.png"); */
   padding: 0 16px;
   overflow-x: hidden;
   overscroll-behavior-x: contain;
@@ -342,7 +344,7 @@ form.create-note button {
   background-color: clear;
   left: auto;
   right: auto;
-  
+  margin: 15px;
 }
 .center  h1 {
   font-size: 1.5rem;
@@ -361,4 +363,12 @@ form.create-note button {
   margin-top: 35%;
   margin-left: 58%;
   border-radius: 0px;
+}
+.lightning {
+  background-color: clear;
+  display: inline-block;
+  transform: rotate(15deg);
+  position: relative;
+  margin-left: 10px;
+  
 }

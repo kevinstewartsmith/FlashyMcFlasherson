@@ -1,6 +1,8 @@
 import React from "react"
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
+import FlashOnIcon from '@mui/icons-material/FlashOn';
+import { transform } from "lodash";
 
 function BreadcrumbsUI(props) {
     // const {
@@ -14,7 +16,7 @@ function BreadcrumbsUI(props) {
     console.log("Naviget: " + navigate);
     return (
         <div className="breadcrumbs">
-            <Breadcrumbs aria-label="breadcrumb" separator=">" color="white" >
+            <Breadcrumbs aria-label="breadcrumb" separator={<FlashOnIcon sx={{color: "red"}} fontSize="small"/>} color="white" >
                 {pathnames.length ? (
                     <Link onClick={() => navigate("/")}><h1>Collections</h1></Link>
                 ) : (
@@ -27,7 +29,7 @@ function BreadcrumbsUI(props) {
                     <Typography key={name}><h1>{name}</h1></Typography>
                     ) : (
                     <Link key={name} onClick={() => navigate(routeTo)}>
-                        {name}
+                       <h1>{name}</h1>
                     </Link>
                     );
                 })}

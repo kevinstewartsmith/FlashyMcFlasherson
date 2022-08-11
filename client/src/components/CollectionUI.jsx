@@ -60,7 +60,7 @@ function CollectionUI (props) {
                                 id={collection._id}
                                 collectionName={collection.name}
                                 description={collection.description}
-                                onClick={() => { navigate("/collections/" + collection._id) }}
+                                onClick={() => { navigate("/collections/" + collection._id,  { state: { collectionName: collection.name }}) }}
                                 onDelete={collectionChanged}
                             />
                         </Grid>

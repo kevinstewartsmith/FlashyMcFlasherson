@@ -5,7 +5,7 @@ import CreateFlashCard from "./CreateFlashCard";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import {useParams} from "react-router-dom";
+import {useParams, useLocation} from "react-router-dom";
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import PsychologyIcon from '@mui/icons-material/Psychology';
@@ -14,17 +14,20 @@ import { Link } from "react-router-dom";
 
 
 function FlashCardUI(props) {
-    const { collectionName } = useParams()
+    const { collectionID } = useParams()
+    const location = useLocation()
+    const name = location.state.collectionName
     const [fcCount,setFCCount] = useState(0);
     const [flashCards, setFlashCards] = useState([])
     const [editMode, setEditMode] = useState(false)
 
+
     useEffect(() => {
-        if (collectionName !== "") {
+        if (collectionID !== "") {
             fetch("/filterFlashCards", {     
                 method: 'POST',
                 // We convert the React state to JSON and send it as the POST body
-                body: JSON.stringify({"collectionID": collectionName}),
+                body: JSON.stringify({"collectionID": collectionID}),
                 headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
             }).then(function(response){
             return response.json();
@@ -40,7 +43,7 @@ function FlashCardUI(props) {
     const withLink = (to, children) => <Link to={to}>{children}</Link>;
        {/* // onClick={() => { navigate("/collections/" + collection._id) }} */}
         const actions = [
-            { icon: <Link to={"/desk/" + collectionName} state={{flashCards: flashCards}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
+            { icon: <Link to={"/desk/" + collectionID} state={{flashCards: flashCards, collectionName: name}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
             { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
             { icon: <EditIcon />, name: 'Edit Flashcards', click: editClicked},
             { icon: <PsychologyIcon/>, name: 'Games'},
@@ -63,10 +66,10 @@ function FlashCardUI(props) {
         <CreateFlashCard 
             onAdd={flashCardsChanged}
             inputType={"text"}
-            selectedCollection={collectionName}
+            selectedCollection={collectionID}
 
         />
-        
+        <h1>{name}</h1>
         <Grid
             container
             //rowSpacing={1}
@@ -82,7 +85,7 @@ function FlashCardUI(props) {
                         id={flashCard._id}
                         front={flashCard.front}
                         back={flashCard.back}
-                        collectionID={collectionName}
+                        collectionID={collectionID}
                         onDelete={flashCardsChanged}
                         editMode={editMode}
                     />

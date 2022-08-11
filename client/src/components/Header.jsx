@@ -7,7 +7,7 @@ function Header() {
   const navigate = useNavigate()
   return (
     <header>
-      <div  onClick={() => { navigate("/") }}><h1>Flashy {<FlashOnIcon fontSize="large" />}McFlasherson</h1></div>
+      <div  onClick={() => { navigate("/") }}><h1>Flashy<div className="lightning"><FlashOnIcon fontSize="56rem"/></div>McFlasherson</h1></div>
     </header>
   );
 }
