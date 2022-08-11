@@ -1,11 +1,11 @@
 import React from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
 import Zoom from "@mui/material/Zoom";
 import Grid from "@mui/material/Grid";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { PropaneSharp } from "@mui/icons-material";
+import DeleteDialog from "./DeleteDialog";
 
 function CardOptions(props) {
     return (
@@ -35,6 +35,14 @@ function CardOptions(props) {
                         </Fab>
                     </Zoom>
                 </Grid>
+                <Grid item padding={2} xs={4} >
+                    <DeleteDialog
+                        front={props.front}
+                        back={props.back} 
+                        deleteFlashCard={props.deleteFlashCard}
+                    />
+                </Grid>
+                
             </Grid>    
         </div>
     )

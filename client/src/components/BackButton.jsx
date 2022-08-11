@@ -8,13 +8,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 export default function BackButton(props) {
   return (
     <Stack direction="row" spacing={2}>
-      <Button 
-        variant="outlined" 
-        startIcon={<ArrowBackIosIcon />}
-        onClick={props.onClick}
-    >
-        Back
-      </Button>
+        <Button 
+            variant="outlined" 
+            startIcon={<ArrowBackIosIcon />}
+            onClick={props.onClick}
+        >
+            Back
+        </Button>
     </Stack>
   );
 }

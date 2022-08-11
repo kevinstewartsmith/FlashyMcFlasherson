@@ -3,7 +3,9 @@ import { useSpring, a } from "@react-spring/web";
 import styles from "./styles.module.css";
 import CardOptions from "./CardOptions";
 
+
 export default function FlashCard(props) {
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const [flipped, set] = useState(true);
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
@@ -11,34 +13,35 @@ export default function FlashCard(props) {
     config: { mass: 5, tension: 500, friction: 80 }
   });
   const editMode = props.editMode;
-  // function deleteFlashCard() {
-  //   console.log("Flashcard deleted: " + props.id)
-  //   const id = props.id
-  //   props.onDelete(id)
-  // }
-  function editFlashCard() {console.log("Edit flashcard");}
+ 
+  function editFlashCard() {
+    console.log("Edit flashcard");
 
+  }
+  function deletFlashCardPressed() {
+
+  }
   function deleteFlashCard() {
     console.log("FC UI Deleted card ID: " + props.id);
     const flashCard = props.id
     fetch("/deleteFlashCard", {     
-        method: 'POST',
-        body: JSON.stringify({"collectionID": props.collectionID, "flashCardID": props.id}),
-        headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+      method: 'POST',
+      body: JSON.stringify({"collectionID": props.collectionID, "flashCardID": props.id}),
+      headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
     }).then(function(response){
-    return response.json();
+      return response.json();
     }).then(function(response){
-        console.log(response);
-         
-        props.onDelete()          
+      console.log(response);   
+      props.onDelete()          
     }).catch(err => {
-        console.log("Error Reading data " + err);
+      console.log("Error Reading data " + err);
     });
     
 }
 
   return (
     <div>
+    
       <div>
         <div className="flash-card note-div">
           <div className="flash" onClick={() => set((state) => !state)}>
@@ -79,6 +82,8 @@ export default function FlashCard(props) {
       <CardOptions
         deleteFlashCard={deleteFlashCard}
         editFlashCard={editFlashCard}
+        front={props.front}
+        back={props.back}
       /> : null}
       
     </div>

@@ -4,10 +4,6 @@ import Fab from "@mui/material/Fab";
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-
-//Center the cards div - check
-//Add bread crumbs
-//add flashcard data
 function CreateFlashCard(props) {
   //const [expanded, setExpansion] = useState(false);
   const [flashCardData, setFlashCardData] = useState({ front: "", back: "" });
@@ -101,13 +97,9 @@ function CreateFlashCard(props) {
             value={flashCardData.back}            
         />
         
-        
-
-        {/* <Zoom in={expanded}> */}
-          <Fab onClick={addFlashCard}>
+        <Fab onClick={addFlashCard}>
             <AddIcon />
-          </Fab>
-        {/* </Zoom> */}
+        </Fab>
       </form>
     </div>
   );

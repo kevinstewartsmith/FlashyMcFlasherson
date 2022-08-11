@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Grid from "@mui/material/Grid";
-import FlashCard from "./FlashCard";
-import CreateFlashCard from "./CreateFlashCard";
+import FlashCard from "../FlashCard";
+import CreateFlashCard from "../CreateFlashCard";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -42,12 +42,12 @@ function FlashCardUI(props) {
 
     const withLink = (to, children) => <Link to={to}>{children}</Link>;
        {/* // onClick={() => { navigate("/collections/" + collection._id) }} */}
-        const actions = [
-            { icon: <Link to={"/desk/" + collectionID} state={{flashCards: flashCards, collectionName: name}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
-            { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
-            { icon: <EditIcon />, name: 'Edit Flashcards', click: editClicked},
-            { icon: <PsychologyIcon/>, name: 'Games'},
-        ];
+    const actions = [
+        { icon: <Link to={"/desk/" + collectionID} state={{flashCards: flashCards, collectionName: name}} ><ViewCarouselIcon /></Link> , name: 'Review Flashcards' },
+        { icon: <DashboardCustomizeIcon />, name: 'Add Flashcard' },
+        { icon: <EditIcon />, name: 'Edit Flashcards', click: editClicked},
+        { icon: <PsychologyIcon/>, name: 'Games'},
+    ];
 
     function flashCardsChanged() {
         setFCCount(fcCount + 1)
@@ -63,52 +63,53 @@ function FlashCardUI(props) {
         <div className="body-div">
             {/* <button onClick={props.onClick}>click</button> */}
 
-        <CreateFlashCard 
-            onAdd={flashCardsChanged}
-            inputType={"text"}
-            selectedCollection={collectionID}
+            <CreateFlashCard 
+                onAdd={flashCardsChanged}
+                inputType={"text"}
+                selectedCollection={collectionID}
 
-        />
-        <h1>{name}</h1>
-        <Grid
-            container
-            //rowSpacing={1}
-            spacing={2}
-            //columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            justify="space-evenly"
-            alignItems="center"
-        >
-            {flashCards.map((flashCard) => (
-                <Grid item padding={1} xs={4}>
-                    <FlashCard
-                        key={flashCard._id}
-                        id={flashCard._id}
-                        front={flashCard.front}
-                        back={flashCard.back}
-                        collectionID={collectionID}
-                        onDelete={flashCardsChanged}
-                        editMode={editMode}
+            />
+            <h1>{name}</h1>
+            <Grid
+                container
+                //rowSpacing={1}
+                spacing={2}
+                //columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                justify="space-evenly"
+                alignItems="center"
+            >
+                {flashCards.map((flashCard) => (
+                    <Grid item padding={1} xs={4}>
+                        <FlashCard
+                            key={flashCard._id}
+                            id={flashCard._id}
+                            front={flashCard.front}
+                            back={flashCard.back}
+                            collectionID={collectionID}
+                            onDelete={flashCardsChanged}
+                            editMode={editMode}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ 
+                    position: 'fixed', bottom: 32, right: 32,
+                    '& .MuiFab-primary': { width: 80, height: 80 }
+                }}
+                icon={<SpeedDialIcon />}
+            >
+                { actions.map((action) => (
+                    <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                        sx={{backgroundColor: "red", width: 72, height: 72}}
+                        onClick={action.click}
                     />
-                </Grid>
-            ))}
-        </Grid>
-        <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ position: 'fixed', bottom: 32, right: 32 }}
-            icon={<SpeedDialIcon />}
-            
-        >
-            { actions.map((action) => (
-                <SpeedDialAction
-                    key={action.name}
-                    icon={action.icon}
-                    tooltipTitle={action.name}
-                    sx={{backgroundColor: "red"}}
-                    onClick={action.click}
-
-                />
-            )) }
-        </SpeedDial>
+                )) }
+            </SpeedDial>
         
       </div>
     )

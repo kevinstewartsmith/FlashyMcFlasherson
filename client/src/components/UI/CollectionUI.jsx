@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import CreateCollection from "./CreateCollection";
+import CreateCollection from "../CreateCollection";
 import Grid from "@mui/material/Grid";
-import Note from "./Note";
+import Note from "../Note";
 
 function CollectionUI (props) {
     const navigate = useNavigate();

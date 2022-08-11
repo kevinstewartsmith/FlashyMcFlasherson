@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import CollectionUI from "./CollectionUI";
-import FlashCardUI from "./FlashCardUI";
+import CollectionUI from "./UI/CollectionUI";
+import FlashCardUI from "./UI/FlashCardUI";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import BreadcrumbsUI  from "./BreadcrumbsUI";
+import BreadcrumbsUI  from "./UI/BreadcrumbsUI";
 import Deck from "./Deck"
-import Desk from "./Desk"
+import Desk from "./UI/Desk"
 
 
 function App() {
   const [collectionClicked, setCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState("");
   
-  // function handleCollectionClick(collectionID) {
-  //   console.log("Collection click App: " + collectionID);
-  //   setSelectedCollection(collectionID) 
-  //   changeView()
-  // }
-  // function backButtonPressed() {
-  //   setSelectedCollection("") 
-  //   changeView()
-  // }
+
   function handleBreadCrumbClick() {}
   
-  function changeView(){  setCollectionClicked(!collectionClicked) }
+  // function changeView(){  setCollectionClicked(!collectionClicked) }
 
   return (
     <Router>
@@ -65,8 +57,7 @@ function App() {
 
         </Routes>
         </div>
-        <Footer />
-      
+        <Footer />   
     </Router>
   );
 }
