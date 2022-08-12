@@ -7,11 +7,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Zoom, Fab } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import Note from './Note';
-import FlashCard from './FlashCard';
+
+import FlashCard from '../Cards/FlashCard';
 import { set } from 'lodash';
 
-export default function AlertDialog(props) {
+export default function DeleteDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

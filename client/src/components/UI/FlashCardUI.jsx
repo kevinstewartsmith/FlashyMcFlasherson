@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Grid from "@mui/material/Grid";
-import FlashCard from "../FlashCard";
-import CreateFlashCard from "../CreateFlashCard";
+import FlashCard from "../Cards/FlashCard";
+import CreateFlashCard from "../Inputs/CreateFlashCard";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';

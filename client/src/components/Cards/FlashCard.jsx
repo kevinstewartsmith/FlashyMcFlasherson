@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
-import styles from "./styles.module.css";
-import CardOptions from "./CardOptions";
+import styles from "../styles.module.css";
+import CardOptions from "../Buttons/CardOptions";
 
 
 export default function FlashCard(props) {

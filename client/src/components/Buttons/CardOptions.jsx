@@ -5,7 +5,8 @@ import Zoom from "@mui/material/Zoom";
 import Grid from "@mui/material/Grid";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { PropaneSharp } from "@mui/icons-material";
-import DeleteDialog from "./DeleteDialog";
+import DeleteDialog from "../Dialogs/DeleteDialog";
+import EditFlashCardDialog from "../Dialogs/EditFlashCardDialog";
 
 function CardOptions(props) {
     return (
@@ -41,6 +42,9 @@ function CardOptions(props) {
                         back={props.back} 
                         deleteFlashCard={props.deleteFlashCard}
                     />
+                </Grid>
+                <Grid item padding={2} xs={4} >
+                    <EditFlashCardDialog />
                 </Grid>
                 
             </Grid>    

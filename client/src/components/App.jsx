@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Partials/Header";
+import Footer from "./Partials/Footer";
 import CollectionUI from "./UI/CollectionUI";
 import FlashCardUI from "./UI/FlashCardUI";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import BreadcrumbsUI  from "./UI/BreadcrumbsUI";
-import Deck from "./Deck"
+import Deck from "./Cards/Deck"
 import Desk from "./UI/Desk"
 
 

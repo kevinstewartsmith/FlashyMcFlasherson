@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
-import styles from "./styles.module.css";
+import styles from "../styles.module.css";
 import {useParams} from "react-router-dom";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { PropaneSharp } from "@mui/icons-material";

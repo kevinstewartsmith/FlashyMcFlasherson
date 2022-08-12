@@ -1,7 +1,7 @@
-import Deck from "../Deck"
+import Deck from "../Cards/Deck"
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import BackButton from "../BackButton";
+import BackButton from "../Buttons/BackButton";
 
 function Desk() {
     const navigate = useNavigate();
