@@ -7,6 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Zoom, Fab } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import Form from '../Inputs/Form';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 import { set } from 'lodash';
@@ -14,26 +16,46 @@ import CreateFlashCard from '../Inputs/CreateFlashCard';
 
 export default function EditFlashCardDialog(props) {
   const [open, setOpen] = React.useState(false);
-
+  const [flashCardData, setFlashCardData] = React.useState({front:"", back:""})
   const handleClickOpen = () => {
     setOpen(true);
   };
+  let updateClickCount = 0;
 
+  React.useEffect(() => {
+    console.log("Data come yo");
+    console.log(flashCardData);
+    
+
+  }); 
+  //,[updateClickCount]
+    
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDelete = () => {
-    props.deleteFlashCard()
+  const handleUpdate = () => {
+   
+    
     setOpen(false)
-    console.log("clicky poo");
+    // console.log("update!");
+    // console.log(flashCardData);
   };
-
+  const handleFlashcardData = (data) => {
+    //setFlashCardData(data)
+    //console.log(data);
+    
+    setFlashCardData(data)
+    props.handleFlashcardData(data)
+    //console.log(flashCardData);
+    //updateClickCount++
+    //handleUpdate()
+  }
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <Zoom in={true}>
           <Fab color="primary" size="small" aria-label="add" >
-            <DeleteOutlinedIcon sx={{color:"primary"}} className="delete-button" /> 
+            <EditIcon sx={{color:"primary"}} className="delete-button" /> 
           </Fab>
         </Zoom>
       </Button>
@@ -44,17 +66,22 @@ export default function EditFlashCardDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Are you sure you want to delete this Flashcard?"}
+          {"Are you sure you want to update this Flashcard?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {/* Later you can archieve the deleted card */}
           </DialogContentText>
 
-          <CreateFlashCard />
+          {flashCardData.front}
+          <Form 
+            front={props.front}
+            back={props.back}
+            handleFlashcardData={handleFlashcardData}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDelete}>Update</Button>
+          <Button onClick={handleUpdate}>Update</Button>
           <Button onClick={handleClose} autoFocus>
             Cancel
           </Button>

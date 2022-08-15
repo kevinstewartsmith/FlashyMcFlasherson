@@ -13,14 +13,34 @@ export default function FlashCard(props) {
     config: { mass: 5, tension: 500, friction: 80 }
   });
   const editMode = props.editMode;
- 
-  function editFlashCard() {
+  const [flashCardData, setFlashCardData] = useState({front:"",back:""})
+  function editFlashCard(data) {
     console.log("Edit flashcard");
+    console.log("FC UI Deleted card ID: " + props.id);
+    const flashCard = props.id
+    fetch("/updateFlashCard", {     
+      method: 'POST',
+      body: JSON.stringify({"collectionID": props.collectionID, "flashCardID": props.id, "front": props.front, "back": props.back}),
+      headers: {"Content-Type": "application/json", 'Accept': 'application/json'}//{
+    }).then(function(response){
+      return response.json();
+    }).then(function(response){
+      console.log(response);   
+      props.onUpdate()          
+    }).catch(err => {
+      console.log("Error Reading data " + err);
+    });
 
   }
-  function deletFlashCardPressed() {
+  React.useEffect(() => {
+    console.log("Data come yo Flash cawd");
+    console.log(flashCardData);  
+  }); 
 
+  function handleFlashcardData(data) {
+    setFlashCardData(data)
   }
+
   function deleteFlashCard() {
     console.log("FC UI Deleted card ID: " + props.id);
     const flashCard = props.id
@@ -37,7 +57,7 @@ export default function FlashCard(props) {
       console.log("Error Reading data " + err);
     });
     
-}
+  }
 
   return (
     <div>
@@ -84,6 +104,8 @@ export default function FlashCard(props) {
         editFlashCard={editFlashCard}
         front={props.front}
         back={props.back}
+        id={props.id}
+        handleFlashcardData={handleFlashcardData}
       /> : null}
       
     </div>

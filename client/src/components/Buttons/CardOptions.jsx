@@ -9,11 +9,12 @@ import DeleteDialog from "../Dialogs/DeleteDialog";
 import EditFlashCardDialog from "../Dialogs/EditFlashCardDialog";
 
 function CardOptions(props) {
+    function handleFlashcardData(data) {
+        props.handleFlashcardData(data)
+    }
     return (
         <div className="card-options">
-            {/* <Fab color="primary" aria-label="add">
-            <AddIcon />
-            </Fab> */}
+
             <Grid
                 container
                 //rowSpacing={1}
@@ -22,7 +23,7 @@ function CardOptions(props) {
                 justify="space-evenly"
                 alignItems="center"
             >
-                <Grid item padding={2} xs={4} >
+                {/* <Grid item padding={2} xs={4} >
                     <Zoom in={true} >
                         <Fab color="primary" aria-label="add" onClick={props.editFlashCard}>
                             <EditIcon sx={{color:"primary"}} /> 
@@ -35,6 +36,13 @@ function CardOptions(props) {
                             <DeleteOutlinedIcon sx={{color:"primary"}} className="delete-button" /> 
                         </Fab>
                     </Zoom>
+                </Grid> */}
+                <Grid item padding={2} xs={4} >
+                    <EditFlashCardDialog
+                        front={props.front}
+                        back={props.back}
+                        handleFlashcardData={handleFlashcardData}
+                    />
                 </Grid>
                 <Grid item padding={2} xs={4} >
                     <DeleteDialog
@@ -43,9 +51,7 @@ function CardOptions(props) {
                         deleteFlashCard={props.deleteFlashCard}
                     />
                 </Grid>
-                <Grid item padding={2} xs={4} >
-                    <EditFlashCardDialog />
-                </Grid>
+
                 
             </Grid>    
         </div>

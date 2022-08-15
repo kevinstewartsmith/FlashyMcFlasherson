@@ -194,9 +194,32 @@ app.post("/deleteFlashCard", (req, res) => {
 
   
 })
-app.get("/collections/:collectionName", function(req, res) {
+// app.get("/collections/:collectionName", function(req, res) {
 
-})
+// })
+
+app.post("/updateFlashCard", (req, res) => {
+  console.log(req.body.flashCardID);
+  console.log("update card from server");
+  const flashCardID = req.body.flashCardID;
+  const front = req.body.front
+  const back = req.body.back
+  
+  FCCollections.findOneAndUpdate( {'flashCards._id' : flashCardID} ,
+  {
+    front: front,
+    back: back
+  },
+  function(err, doc){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(doc);
+      res.json({updated: flashCardID})
+    }
+     
+  })
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
